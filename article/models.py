@@ -10,8 +10,14 @@ class Article(models.Model):
     subtitle = models.CharField(max_length=200, verbose_name='Подзаголовок')
     img = models.ImageField(null=True, blank=True, verbose_name='Изображение')
     intro = models.TextField(verbose_name='Вступительная часть')
+    topic = models.ManyToManyField('Topic', verbose_name='Рубрика')
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
+    PUBLIC_STATUS = (
+        ('P', 'Опубликовать'),
+        ('U', 'Не опубликовывать')
+    )
+    status = models.CharField(max_length=1, choices=PUBLIC_STATUS, blank=True, default='U', verbose_name='публикация')
 
     def publish(self):
         self.published_date = timezone.now()
@@ -42,7 +48,7 @@ class Ingredients(models.Model):
 # таблица приготовления по шагам к рецепту
 class CookingProcess(models.Model):
     recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)
-    step = models.CharField(max_length=100, verbose_name='шаг', null=True, blank=True)
+    step = models.CharField(max_length=500, verbose_name='шаг', null=True, blank=True)
 
 
 # модель для статьи-добавки
@@ -66,11 +72,17 @@ class Ration(Article):
     text3 = models.TextField(verbose_name='Третья часть')
 
     def get_absolute_url(self):
-        return reverse('diete', args=[str(self.id)])
+        return reverse('ration', args=[self.title])
 
 
 class GalleryRation(models.Model):
-    diete = models.ForeignKey('Ration',on_delete=models.CASCADE)
+    ration = models.ForeignKey('Ration',on_delete=models.CASCADE)
     img = models.ImageField(null=True, blank=True, verbose_name='Изображение')
     description = models.TextField(verbose_name='Описание')
 
+
+class Topic(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Тематика")
+
+    def __str__(self):
+        return self.name
