@@ -6,7 +6,7 @@ from django.urls import reverse
 # абстрактный класс статьи
 class Article(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True)
-    title = models.CharField(max_length=200, verbose_name='Заголовок', primary_key=True)
+    title = models.CharField(max_length=200, verbose_name='Заголовок')
     subtitle = models.CharField(max_length=200, verbose_name='Подзаголовок')
     img = models.ImageField(null=True, blank=True, verbose_name='Изображение')
     intro = models.TextField(verbose_name='Вступительная часть')

@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.urls import path, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
@@ -21,11 +21,11 @@ from django.views.static import serve
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'', include('article.urls')),
+    path('admin/', admin.site.urls),
+    path('', include('article.urls')),
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # Используйте static() чтобы добавить соотношения для статических файлов
 # Только на период разработки
 if settings.DEBUG:
-    urlpatterns.append(url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}))
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns.append(path('media/<str:path>', serve, {'document_root': settings.MEDIA_ROOT}))

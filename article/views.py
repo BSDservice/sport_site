@@ -10,17 +10,16 @@ def nutrition(request):
     return render(request, 'article/nutrition/nutrition.html')
 
 
-def recipe(request):
+def recipe(request, title):
     return render(request, 'article/nutrition/recipe.html')
 
 
-def supplement(request):
+def supplement(request, title):
     return render(request, 'article/nutrition/supplement.html')
 
 
-def ration(request, pk):
-    obj = Ration.objects.get(pk)
-    print(type(obj.title))
+def ration(request, title):
+    obj = Ration.objects.get(title=title)
     return render(request, 'article/nutrition/ration.html',{'title': obj.title})
 
 
