@@ -1,6 +1,7 @@
 {% load static %}
 <!doctype html>
-<html lang="en">
+<html lang="ru">
+{% block head %}
   <head>
     <title>НАЗВАНИЕ САЙТА</title>
     <!-- Required meta tags -->
@@ -40,6 +41,33 @@
     <aside style="background-color: cyan">
         РЕКЛАМНЫЙ БЛОК
     </aside>
+
+    {% if section %}
+
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
+            <div class="col-sm-8">
+                <h1>{{ section }}</h1>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+          <div class="collapse navbar-collapse col-sm-4" id="navbarNav">
+            <ul class="navbar-nav" style="">
+              <li class="nav-item col-sm-4">
+                  <a class="nav-link" href="{% url 'list_ration' %}">Рацион</a>
+              </li>
+              <li class="nav-item col-sm-4">
+                <a class="nav-link" href="{% url 'list_recipe' %}">Рецепты</a>
+              </li>
+              <li class="nav-item col-sm-4">
+                <a class="nav-link" href="{% url 'list_supplement' %}">Добавки</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+    {% endif %}
+    {% endblock %}
     {% block content %}
     {% endblock %}
 

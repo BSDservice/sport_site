@@ -3,26 +3,9 @@ from .models import *
 from django.forms import TextInput, Textarea
 from django.db import models
 
-'''
-@admin.register(Ingredients)
-class IngredientsAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size':'100'})},
-    }
-    list_display = ('recipe',)
 
-
-@admin.register(CookingProcess)
-class CookingProcessAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size':'100'})},
-    }
-    list_display = ('recipe',)
-'''
-
-
-class IngredientsAdminInline(admin.StackedInline):
-    model = Ingredients
+class IngredientAdminInline(admin.StackedInline):
+    model = Ingredient
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '100'})},
     }
@@ -49,7 +32,7 @@ class RecipeAdmin(admin.ModelAdmin):
     search_fields = ('title', 'intro')
     # exclude = () #fields и exclude. Будьте осторожны с настройкой fields! Когда она появляется, админка перестает выводить все без исключения поля, а выводит только те, которые перечислены в этом свойстве. В качестве альтернативы используется свойство exclude, в нем перечисляются все поля, которые не должны отображаться.
     # fieldsets = ((None, {'fields': (,)}),(None, {'fields': (,)}),) #Принимает в качестве значения кортеж из кортежей (извините за тавталогию). В кортеже первым элементом должно идти название группы, а вторым словарь из параметров группы. Одним из параметров является fields, в котором перечисляются выводимые поля. Названием группы может также являться None, тогда группа выводится без названия.
-    inlines = [IngredientsAdminInline, CookingProcessAdminInline]
+    inlines = [IngredientAdminInline, CookingProcessAdminInline]
 
 
 class SupListAdminInline(admin.StackedInline):
@@ -57,16 +40,6 @@ class SupListAdminInline(admin.StackedInline):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '100'})},
     }
-
-
-'''
-@admin.register(SupList)
-class IngredientsAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size':'100'})},
-    }
-    list_display = ('supplement', 'name')
-'''
 
 
 @admin.register(Supplement)
@@ -79,8 +52,8 @@ class SupplementAdmin(admin.ModelAdmin):
     inlines = [SupListAdminInline]
 
 
-class GalleryRationInline(admin.StackedInline):
-    model = GalleryRation
+class GalleryInline(admin.StackedInline):
+    model = Gallery
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},
     }
@@ -93,7 +66,9 @@ class RationAdmin(admin.ModelAdmin):
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},
     }
     search_fields = ('title', 'intro')
-    inlines = [GalleryRationInline]
+    inlines = [GalleryInline]
 
 
 admin.site.register(Topic)
+admin.site.register(Section)
+
