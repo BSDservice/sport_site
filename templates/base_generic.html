@@ -54,13 +54,13 @@
           <div class="collapse navbar-collapse col-sm-4" id="navbarNav">
             <ul class="navbar-nav" style="">
               <li class="nav-item col-sm-4">
-                  <a class="nav-link" href="{% url 'list_ration' %}">Рацион</a>
+                  <a class="nav-link" href="{% url 'list_ration' %}">{{ subsection1 }}</a>
               </li>
               <li class="nav-item col-sm-4">
-                <a class="nav-link" href="{% url 'list_recipe' %}">Рецепты</a>
+                <a class="nav-link" href="{% url 'list_recipe' %}">{{ subsection2 }}</a>
               </li>
               <li class="nav-item col-sm-4">
-                <a class="nav-link" href="{% url 'list_supplement' %}">Добавки</a>
+                <a class="nav-link" href="{% url 'list_supplement' %}">{{ subsection3 }}</a>
               </li>
             </ul>
           </div>

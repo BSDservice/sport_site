@@ -10,8 +10,10 @@ def index(request):
 
 def nutrition(request):
     section = 'Питание'
-    obj = Section.objects.all().filter(name='Питание').reverse()
-    return render(request, 'article/nutrition/nutrition.html',{'obj': obj, 'section': section})
+    obj = Section.objects.filter(name=section)
+    return render(request, 'article/nutrition/nutrition.html', {'obj': obj, 'section': section,
+                                                                'subsection1': 'Рацион', 'subsection2': 'Рецепты',
+                                                                'subsection3': 'Добавки'})
 
 
 def recipe(request, title):
@@ -23,7 +25,6 @@ def supplement(request, title):
 
 
 def ration(request, title):
-    obj = Ration.objects.get(title=title)
     return render(request, 'article/nutrition/ration.html',{'title': obj.title})
 
 

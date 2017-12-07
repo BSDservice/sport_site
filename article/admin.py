@@ -2,6 +2,13 @@ from django.contrib import admin
 from .models import *
 from django.forms import TextInput, Textarea
 from django.db import models
+from django import forms
+
+
+admin.site.register(Topic)
+admin.site.register(Section)
+admin.site.register(Gallery)
+admin.site.register(Subsection)
 
 
 class IngredientAdminInline(admin.StackedInline):
@@ -18,7 +25,32 @@ class CookingProcessAdminInline(admin.StackedInline):
     }
 
 
-@admin.register(Recipe)
+class SupListAdminInline(admin.StackedInline):
+    model = SupList
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '100'})},
+    }
+
+
+class GalleryInline(admin.StackedInline):
+    model = Gallery
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},
+    }
+
+
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '100'})},
+        models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},
+    }
+    search_fields = ('title', 'intro')
+    inlines = [IngredientAdminInline, CookingProcessAdminInline, GalleryInline]
+
+
+'''
+admin.site.register(Article)
 class RecipeAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '100'})},
@@ -35,11 +67,12 @@ class RecipeAdmin(admin.ModelAdmin):
     inlines = [IngredientAdminInline, CookingProcessAdminInline]
 
 
-class SupListAdminInline(admin.StackedInline):
-    model = SupList
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size': '100'})},
-    }
+@admin.register(Recipe)
+class RecipeAdmin(admin.ModelAdmin):
+    pass
+
+
+
 
 
 @admin.register(Supplement)
@@ -68,7 +101,5 @@ class RationAdmin(admin.ModelAdmin):
     search_fields = ('title', 'intro')
     inlines = [GalleryInline]
 
-
-admin.site.register(Topic)
-admin.site.register(Section)
+'''
 
