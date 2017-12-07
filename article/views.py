@@ -10,7 +10,7 @@ def index(request):
 
 def nutrition(request):
     section = 'Питание'
-    obj = Section.objects.filter(name=section)
+    obj = Article.objects.filter(section=section)
     return render(request, 'article/nutrition/nutrition.html', {'obj': obj, 'section': section,
                                                                 'subsection1': 'Рацион', 'subsection2': 'Рецепты',
                                                                 'subsection3': 'Добавки'})

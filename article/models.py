@@ -40,7 +40,7 @@ class Topic(models.Model):
         verbose_name_plural = 'Рубрика'
 
 
-# абстрактный класс статьи из араздела питание
+# класс статьи из араздела питание
 class Article(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True)
     section = models.ForeignKey(Section, null=True,blank=True, on_delete=models.SET_NULL)
@@ -57,9 +57,8 @@ class Article(models.Model):
         (1, 'Готова к публикации')
     )
     status = models.SmallIntegerField(choices=PUBLIC_STATUS, default=0, verbose_name='Статус')
-
     text = models.TextField(verbose_name='Текст статьи')
-    time = models.TimeField(verbose_name='Время')
+    time = models.SmallIntegerField(blank=True,null=True,verbose_name='Время')
 
     def publish(self):
         self.published_date = timezone.now()
