@@ -25,7 +25,10 @@ urlpatterns = [
     path('', include('article.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Используйте static() чтобы добавить соотношения для статических файлов
 # Только на период разработки
+'''
 if settings.DEBUG:
     urlpatterns.append(path('media/<str:path>', serve, {'document_root': settings.MEDIA_ROOT}))
+'''

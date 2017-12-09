@@ -5,35 +5,25 @@ from .models import *
 
 
 def index(request):
-    return render(request, 'article/index.html')
+    section_list = Section.objects.all()
+    return render(request, 'article/index.html', {'section_list': section_list})
 
 
-def nutrition(request):
-    section = 'Питание'
-    obj = Article.objects.filter(section=section)
-    return render(request, 'article/nutrition/nutrition.html', {'obj': obj, 'section': section,
-                                                                'subsection1': 'Рацион', 'subsection2': 'Рецепты',
-                                                                'subsection3': 'Добавки'})
+def section(request, section_name):
+    section_list = Section.objects.all()
+    obj = Article.objects.filter(section__name=section_name)
+    subsection_list = Subsection.objects.filter(section__name=section_name)
+    return render(request, 'article/section.html', {'obj': obj, 'section_name': section_name,
+                                                    'subsection_list': subsection_list, 'section_list': section_list})
 
 
-def recipe(request, title):
-    return render(request, 'article/nutrition/recipe.html')
+def subsection(request, section_name, subsection_name):
+    return render(request, 'article/subsection.html')
 
 
-def supplement(request, title):
-    return render(request, 'article/nutrition/supplement.html')
+def article(request, section_name, subsection_name, article_title):
+    return render(request, 'article/article.html')
 
-
-def ration(request, title):
-    return render(request, 'article/nutrition/ration.html',{'title': obj.title})
-
-
-def list_recipe(request):
-    return render(request, 'article/nutrition/list-recipe.html')
-
-
-def list_supplement(request):
-    return render(request, 'article/nutrition/list-supplement.html')
 
 
 '''
