@@ -9,6 +9,12 @@ admin.site.register(Topic)
 admin.site.register(Section)
 admin.site.register(Gallery)
 admin.site.register(Subsection)
+admin.site.register(UserList)
+
+
+@admin.register(Statistic7days)
+class Statistic7daysAdmin(admin.ModelAdmin):
+    readonly_fields = ['today', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'article', 'total']
 
 
 class IngredientAdminInline(admin.StackedInline):

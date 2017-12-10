@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import *
+from datetime import date
 
 
 def index(request):
@@ -22,8 +23,38 @@ def subsection(request, section_name, subsection_name):
 
 
 def article(request, section_name, subsection_name, article_title):
-    return render(request, 'article/article.html')
+    # обновление статистики при запросе статьи
+    if not request.session.session_key:                    # проверяем наличие ID сессии в запросе
+        request.session.save()                             # если нет, сохраням сессию в куки
+    user_id = request.session.session_key                  # и достаём его
+    obj = get_object_or_404(Article, title=article_title)  # достаем статью
+    stat = Statistic7days.objects.get_or_create(article=obj)
+    stat = Statistic7days.objects.get(article=obj)         # получаем статистику по данной статье
+    if user_id:                                            # проверяем наличие ID сессии если нет
+        try:                                               # просто отправим статью
+            # если имеется, пробуем получить запись из таблици уникальных пользователей. Если такой товарищ сегодня
+            UserList.objects.filter(article__title=article_title).get(
+                                               user_id=user_id)  # просматривал эту статью, то просто отдадим ему её
+        except UserList.DoesNotExist:                      # получаем ошибку в случае отсутствия
+            UserList.objects.create(user_id=user_id, article=obj)  # и создаём запись уникального посетителя
+            if stat.today == date.today():                 # таблица уникальных посетителей на сутки
+                stat.first += 1                            # пока дата не сменилась, просто инкриментируем поля
+                stat.total += 1
+                stat.save()
+            else:                                          # если дата сменилась, обнулим таблицу уникальных посетителей
+                UserList.objects.all().delete()            # чтобы можно было учитывать их посещения.
+                stat.today = date.today()                  # ставим сегоднешнюю дату и продвигаем значения в таблице
+                stat.seventh = stat.sixth                  # с статистекой вперёд
+                stat.sixth = stat.fifth
+                stat.fifth = stat.fourth
+                stat.fourth = stat.third
+                stat.third = stat.second
+                stat.second = stat.first
+                stat.first = 1
+                stat.total += 1
+                stat.save()
 
+    return render(request, 'article/article.html', {'obj': obj, 'user_id': user_id})
 
 
 '''

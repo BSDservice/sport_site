@@ -4,14 +4,14 @@
 
     <section class="col-md-6">
         <div style="background-color: red">
-            <h2>САМАЯ ЧИТАЕМАЯ ЗА ТРИ  ДНЯ</h2>
+            <h2>САМАЯ ЧИТАЕМАЯ ЗА НЕДЕЛЮ</h2>
         </div>
         <div>
-            <div class="col-md-6">
-                <h2>ПОСЛЕДНЯЯ ДОБАВЛЕННАЯ</h2>
+            <div class="col-md-6" style="background-color: yellow">
+                <h2>САМАЯ ЧИТАЕМАЯ ЗА ТРИ ДНЯ</h2>
             </div>
-            <div class="col-md-6">
-                <h2>СА</h2>
+            <div class="col-md-6" style="background-color: blue">
+                <h2>САМАЯ ЧИТАЕМАЯ ЗА СЕГОДНЯ</h2>
             </div>
         </div>
     </section>
@@ -20,9 +20,7 @@
     {% for elem in obj %}
         <article>
             <h1>{{ elem.title }}</h1>
-            <h4>{{ elem.subtitle }}</h4>
             <img src="{{ elem.img.url }}">
-            <p>{{ elem.text }}</p>
             <p>{{ elem.author }},{{ elem.created_date }}</p>
         </article>
     {% endfor %}

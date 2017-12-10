@@ -48,6 +48,29 @@ class Topic(models.Model):
         verbose_name_plural = 'Рубрика'
 
 
+class UserList(models.Model):
+    user_id = models.CharField(max_length=64)
+    article = models.ForeignKey('Article', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user_id
+
+
+class Statistic7days(models.Model):
+    today = models.DateField(auto_now_add=True)
+    first = models.PositiveSmallIntegerField(verbose_name='сегодня', default=0)
+    second = models.PositiveSmallIntegerField(verbose_name='Вчера', default=0)
+    third = models.PositiveSmallIntegerField(verbose_name='Позавчера', default=0)
+    fourth = models.PositiveSmallIntegerField(verbose_name='Три дня назад', default=0)
+    fifth = models.PositiveSmallIntegerField(verbose_name='Четыре дня назад', default=0)
+    sixth = models.PositiveSmallIntegerField(verbose_name='Пять дней назад', default=0)
+    seventh = models.PositiveSmallIntegerField(verbose_name='Шесть дней назад', default=0)
+    total = models.PositiveIntegerField(verbose_name='Всего просмотров', default=0)
+    article = models.OneToOneField('Article', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.article.title
+
 # класс статьи из араздела питание
 class Article(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True)
