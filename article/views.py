@@ -54,7 +54,7 @@ def article(request, section_name, subsection_name, article_title):
                 stat.total += 1
                 stat.save()
 
-    return render(request, 'article/article.html', {'obj': obj, 'user_id': user_id})
+    return render(request, 'article/article.html', {'obj': obj})
 
 
 '''
