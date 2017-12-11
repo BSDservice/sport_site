@@ -14,7 +14,7 @@ admin.site.register(UserList)
 
 @admin.register(Statistic7days)
 class Statistic7daysAdmin(admin.ModelAdmin):
-    readonly_fields = ['today', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'article', 'total']
+    readonly_fields = ['date', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'article', 'total']
 
 
 class IngredientAdminInline(admin.StackedInline):

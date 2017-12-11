@@ -32,18 +32,31 @@ def article(request, section_name, subsection_name, article_title):
     stat = Statistic7days.objects.get(article=obj)         # получаем статистику по данной статье
     if user_id:                                            # проверяем наличие ID сессии если нет
         try:                                               # просто отправим статью
-            # если имеется, пробуем получить запись из таблици уникальных пользователей. Если такой товарищ сегодня
-            UserList.objects.filter(article__title=article_title).get(
-                                               user_id=user_id)  # просматривал эту статью, то просто отдадим ему её
+            # если имеется, пробуем получить запись из таблици уникальных пользователей. Если такой товарищ отметился
+            # и дата статистики не отличается от текущей, то просто отдаем статью. Если дата отличается удалим всех
+            # читателей данной статьи и обновим статистику продвинув её вперед.
+            if UserList.objects.filter(article__title=article_title).get(user_id=user_id) and stat.date != date.today():
+                UserList.objects.filter(article=obj).exclude(user_id=user_id).delete()
+                # UserList.objects.create(user_id=user_id, article=obj)
+                stat.date = date.today()
+                stat.seventh = stat.sixth
+                stat.sixth = stat.fifth
+                stat.fifth = stat.fourth
+                stat.fourth = stat.third
+                stat.third = stat.second
+                stat.second = stat.first
+                stat.first = 1
+                stat.total += 1
+                stat.save()
         except UserList.DoesNotExist:                      # получаем ошибку в случае отсутствия
             UserList.objects.create(user_id=user_id, article=obj)  # и создаём запись уникального посетителя
-            if stat.today == date.today():                 # таблица уникальных посетителей на сутки
+            if stat.date == date.today():                 # таблица уникальных посетителей на сутки
                 stat.first += 1                            # пока дата не сменилась, просто инкриментируем поля
                 stat.total += 1
                 stat.save()
             else:                                          # если дата сменилась, обнулим таблицу уникальных посетителей
-                UserList.objects.all().delete()            # чтобы можно было учитывать их посещения.
-                stat.today = date.today()                  # ставим сегоднешнюю дату и продвигаем значения в таблице
+                UserList.objects.filter(article=obj).delete()  # чтобы можно было учитывать их посещения.
+                stat.date = date.today()                  # ставим сегоднешнюю дату и продвигаем значения в таблице
                 stat.seventh = stat.sixth                  # с статистекой вперёд
                 stat.sixth = stat.fifth
                 stat.fifth = stat.fourth

@@ -25,7 +25,7 @@ class Subsection(models.Model):
     section = models.ForeignKey(Section, null=True, on_delete=models.SET_NULL)
 
     def get_url(self):
-        return self.name
+        return self.name.lower()
 
     def __str__(self):
         return self.name
@@ -57,7 +57,7 @@ class UserList(models.Model):
 
 
 class Statistic7days(models.Model):
-    today = models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True, verbose_name='Дата последнего посещения')
     first = models.PositiveSmallIntegerField(verbose_name='сегодня', default=0)
     second = models.PositiveSmallIntegerField(verbose_name='Вчера', default=0)
     third = models.PositiveSmallIntegerField(verbose_name='Позавчера', default=0)
@@ -70,6 +70,7 @@ class Statistic7days(models.Model):
 
     def __str__(self):
         return self.article.title
+
 
 # класс статьи из араздела питание
 class Article(models.Model):
@@ -89,6 +90,9 @@ class Article(models.Model):
     )
     status = models.SmallIntegerField(choices=PUBLIC_STATUS, default=0, verbose_name='Статус')
     time = models.SmallIntegerField(blank=True, null=True, verbose_name='Время')
+
+    def get_url(self):
+        return (self.subsection.name + '/' + self.title).lower()
 
     def publish(self):
         self.published_date = timezone.now()
