@@ -1,3 +1,26 @@
 {% extends "base_generic.html" %}
 {% block content %}
+    <section>
+        <header style="margin-bottom: 20px;">
+            <h3 class="display-3" style="text-transform: capitalize">{{ subsection_name }}</h3>
+            <hr style="width: 2px; color: black">
+        </header>
+        <div class="row">
+            <div class="col-md-9">
+                {% for elem in obj %}
+                <a class="row big-ref-article" href="{{ elem.title }}">
+                    <img class="col-md-5 img-thumbnail img-fluid" src="{{ elem.img.url }}">
+                    <div class="col-md-7">
+                        <h3>{{ elem.title }}<br>
+                            <small class="text-muted">{{ elem.subtitle }}</small></h3>
+                    </div>
+                </a>
+                    <hr>
+                {% endfor %}
+            </div>
+            <aside class="col-md-3">
+
+            </aside>
+        </div>
+    </section>
 {% endblock %}

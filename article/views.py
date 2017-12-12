@@ -13,13 +13,19 @@ def index(request):
 def section(request, section_name):
     section_list = Section.objects.all()
     obj = Article.objects.filter(section__name=section_name)
+    section_stat = Statistic7days.objects.filter(article=obj)
+    top7 = max(i.seven_days for i in section_stat)
+    top3 = max(i.three_days for i in section_stat)
+
     subsection_list = Subsection.objects.filter(section__name=section_name)
     return render(request, 'article/section.html', {'obj': obj, 'section_name': section_name,
                                                     'subsection_list': subsection_list, 'section_list': section_list})
 
 
 def subsection(request, section_name, subsection_name):
-    return render(request, 'article/subsection.html')
+    section_list = Section.objects.all()
+    obj = Article.objects.filter(section__name=section_name, subsection__name=subsection_name)
+    return render(request, 'article/subsection.html', {'subsection_name': subsection_name, 'obj': obj, 'section_list': section_list})
 
 
 def article(request, section_name, subsection_name, article_title):
@@ -39,6 +45,8 @@ def article(request, section_name, subsection_name, article_title):
                 UserList.objects.filter(article=obj).exclude(user_id=user_id).delete()
                 # UserList.objects.create(user_id=user_id, article=obj)
                 stat.date = date.today()
+                stat.three_days = stat.first + stat.second + stat.third
+                stat.seven_days = stat.three_days + stat.fourth + stat.fifth + stat.sixth + stat.seventh
                 stat.seventh = stat.sixth
                 stat.sixth = stat.fifth
                 stat.fifth = stat.fourth
@@ -57,6 +65,8 @@ def article(request, section_name, subsection_name, article_title):
             else:                                          # если дата сменилась, обнулим таблицу уникальных посетителей
                 UserList.objects.filter(article=obj).delete()  # чтобы можно было учитывать их посещения.
                 stat.date = date.today()                  # ставим сегоднешнюю дату и продвигаем значения в таблице
+                stat.three_days = stat.first + stat.second + stat.third
+                stat.seven_days = stat.three_days + stat.fourth + stat.fifth + stat.sixth + stat.seventh
                 stat.seventh = stat.sixth                  # с статистекой вперёд
                 stat.sixth = stat.fifth
                 stat.fifth = stat.fourth
@@ -68,61 +78,3 @@ def article(request, section_name, subsection_name, article_title):
                 stat.save()
 
     return render(request, 'article/article.html', {'obj': obj})
-
-
-'''
-ПРИМЕР
-
-from django.shortcuts import render
-from django.views import generic
-from .models import Clothes, Author
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
-# Create your views here.
-
-def index(request):
-    clothes = Clothes.objects.all()
-    author = Author.objects.first()
-    clothes_list = []
-    a = len(clothes)//3
-    n = 0
-    y = 0
-    for i in range(a+1):
-        clothes_list.append([])
-        clothes_list[y].append(clothes[n])
-        n += 1
-        if n >= len(clothes):
-            break
-        clothes_list[y].append(clothes[n])
-        n += 1
-        if n >= len(clothes):
-            break
-        clothes_list[y].append(clothes[n])
-        n += 1
-        if n >= len(clothes):
-            break
-        y += 1
-    elem = 2
-    def paginated():
-        if elem < len(clothes_list):
-            return True
-        else:
-            return False
-    paginator = Paginator(clothes_list, elem)
-    page = request.GET.get('page')
-    try:
-        clothes_page = paginator.page(page)
-    except PageNotAnInteger:
-        clothes_page = paginator.page(1)
-    except EmptyPage:
-        clothes_page = paginator.page(paginator.num_pages)
-    return render(request, 'clothes_list.html', context={'clothes_page': clothes_page, 'author': author, 'paginated': paginated()})
-
-
-class ClothesDetailView(generic.DetailView):
-    model = Clothes
-'''
-
-
-def list_ration(request):
-    return render(request, 'article/nutrition/list-ration.html')

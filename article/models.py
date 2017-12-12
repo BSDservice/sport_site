@@ -20,6 +20,7 @@ class Section(models.Model):
         db_table = 'section'
 
 
+# подразделы
 class Subsection(models.Model):
     name = models.CharField(max_length=200, verbose_name='Подраздел', unique=True)
     section = models.ForeignKey(Section, null=True, on_delete=models.SET_NULL)
@@ -48,6 +49,7 @@ class Topic(models.Model):
         verbose_name_plural = 'Рубрика'
 
 
+# таблица уникальных посещений на сутки
 class UserList(models.Model):
     user_id = models.CharField(max_length=64)
     article = models.ForeignKey('Article', on_delete=models.CASCADE)
@@ -56,6 +58,7 @@ class UserList(models.Model):
         return self.user_id
 
 
+# статистика на семь дней
 class Statistic7days(models.Model):
     date = models.DateField(auto_now_add=True, verbose_name='Дата последнего посещения')
     first = models.PositiveSmallIntegerField(verbose_name='сегодня', default=0)
@@ -67,12 +70,15 @@ class Statistic7days(models.Model):
     seventh = models.PositiveSmallIntegerField(verbose_name='Шесть дней назад', default=0)
     total = models.PositiveIntegerField(verbose_name='Всего просмотров', default=0)
     article = models.OneToOneField('Article', on_delete=models.CASCADE)
+    three_days = models.PositiveIntegerField(verbose_name='просмотров за три дня', default=0)
+    seven_days = models.PositiveIntegerField(verbose_name='просмотров за семь дней', default=0)
 
     def __str__(self):
         return self.article.title
 
 
-# класс статьи из араздела питание
+# РАЗДЕЛ ПИТАНИЯ
+# класс статьи
 class Article(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True)
     section = models.ForeignKey(Section, null=True, blank=True, on_delete=models.SET_NULL)
@@ -163,7 +169,43 @@ class Gallery(models.Model):
         db_table = 'gallery'
         verbose_name = u'Изображение'
         verbose_name_plural = u'Галерея'
-
-
-
 # КОНЕЦ РАЗДЕЛА ПИТЬАНИЕ
+
+
+# РАЗДЕЛ ФИТНЕСА
+# модель упражнения
+class Exercise(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название упражнения', unique=True)
+    equipment = models.CharField(max_length=100, verbose_name='Спортинвентарь', unique=True)
+    body_parts = models.CharField(max_length=100, verbose_name='Прокачиваемая часть тела', unique=True)
+    img = models.ImageField(null=True, blank=True, verbose_name='Изображение')
+
+
+# иллюстрации с описаниями к упражнениям
+class GalleryExercise(models.Model):
+    exercise = models.ForeignKey(Exercise,on_delete=models.CASCADE)
+    img = models.ImageField(null=True, blank=True, verbose_name='Изображение')
+    description = models.TextField(verbose_name='Описание')
+
+    def __str__(self):
+        return str(self.id)
+
+    class Meta:
+        db_table = 'g_exercise'
+        verbose_name = u'Изображение'
+        verbose_name_plural = u'Галерея'
+
+
+# упражнение в тренировке
+class TrainingPart(models.Model):
+    exercise = models.ForeignKey(on_delete=models.CASCADE, verbose_name='Упражнение')
+    sets = models.PositiveSmallIntegerField(verbose_name='Колличество сетов')
+    reps = models.PositiveSmallIntegerField(verbose_name='Колличество повторений в каждом сете')
+    rest = models.TimeField(verbose_name='Время отдыха между сетами')
+    comment = models.CharField(max_length=200, verbose_name='Комментарий')
+
+
+class Training(models.Model):
+    article = models.ForeignKey(Article,verbose_name='Статья')
+    name = models.CharField(max_length=100, verbose_name='Название тренировки', unique=True)
+    exercise = models.ForeignKey(TrainingPart, verbose_name='Упражнение')
