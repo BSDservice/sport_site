@@ -20,18 +20,19 @@
     <aside class="col-sm-3" style="background-color: #868e96"><h2>РЕКЛАМНЫЙ БЛОК</h2></aside>
     </div>
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-md-10">
             {% for elem in obj %}
-                <a class="row big-ref-article" href="{{ elem.get_url }}">
-                    <img class="col-sm-4" src="{{ elem.img.url }}">
-                    <div class="col-sm-8">
+                <a class="row big-ref-article " href="{{ elem.get_url }}">
+                    <img class="col-md-6 img-fluid" src="{{ elem.img.url }}">
+                    <div class="col-md-6">
                         <h2>{{ elem.title }}</h2>
                         <h3>{{ elem.subtitle }}</h3>
                     </div>
                 </a>
+                <hr>
             {% endfor %}
         </div>
-        <aside class="col-sm-4">
+        <aside class="col-md-2">
 
         </aside>
     </div>

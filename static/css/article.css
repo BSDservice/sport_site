@@ -1,0 +1,13 @@
+h1.logo-site{
+    font-family: 'Oswald', sans-serif;
+    font-size: 48px;
+    text-shadow: 2px 2px 3px white;
+}
+.big-ref-article{
+    color:inherit;
+    padding: 10px 20px;
+}
+.big-ref-article:hover{
+    text-decoration: none;
+    color: inherit;
+}

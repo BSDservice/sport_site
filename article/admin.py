@@ -47,6 +47,7 @@ class GalleryInline(admin.StackedInline):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('title', 'img')
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '100'})},
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},

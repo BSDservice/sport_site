@@ -13,9 +13,9 @@ def index(request):
 def section(request, section_name):
     section_list = Section.objects.all()
     obj = Article.objects.filter(section__name=section_name)
-    section_stat = Statistic7days.objects.filter(article=obj)
-    top7 = max(i.seven_days for i in section_stat)
-    top3 = max(i.three_days for i in section_stat)
+    #section_stat = Statistic7days.objects.filter(article=obj)
+    #top7 = max(i.seven_days for i in section_stat)
+    #top3 = max(i.three_days for i in section_stat)
 
     subsection_list = Subsection.objects.filter(section__name=section_name)
     return render(request, 'article/section.html', {'obj': obj, 'section_name': section_name,

@@ -198,14 +198,14 @@ class GalleryExercise(models.Model):
 
 # упражнение в тренировке
 class TrainingPart(models.Model):
-    exercise = models.ForeignKey(on_delete=models.CASCADE, verbose_name='Упражнение')
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, verbose_name='Упражнение')
     sets = models.PositiveSmallIntegerField(verbose_name='Колличество сетов')
     reps = models.PositiveSmallIntegerField(verbose_name='Колличество повторений в каждом сете')
     rest = models.TimeField(verbose_name='Время отдыха между сетами')
     comment = models.CharField(max_length=200, verbose_name='Комментарий')
+    training = models.ForeignKey('Training', verbose_name='Тренировка', on_delete=models.CASCADE)
 
 
 class Training(models.Model):
-    article = models.ForeignKey(Article,verbose_name='Статья')
+    article = models.ForeignKey(Article,verbose_name='Статья', on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=100, verbose_name='Название тренировки', unique=True)
-    exercise = models.ForeignKey(TrainingPart, verbose_name='Упражнение')
