@@ -3,6 +3,7 @@ from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import *
 from datetime import date
+from django.db.models import Max
 
 
 def index(request):
@@ -12,14 +13,17 @@ def index(request):
 
 def section(request, section_name):
     section_list = Section.objects.all()
-    obj = Article.objects.filter(section__name=section_name)
-    #section_stat = Statistic7days.objects.filter(article=obj)
-    #top7 = max(i.seven_days for i in section_stat)
-    #top3 = max(i.three_days for i in section_stat)
-
     subsection_list = Subsection.objects.filter(section__name=section_name)
+    obj = Article.objects.filter(section__name=section_name).order_by('-created_date')
+    last = obj.first()
+    obj = obj.exclude(title=last)
+    top7 = obj.order_by('-statistic7days__seven_days').first()
+    top3 = obj.exclude(title=top7).order_by('-statistic7days__three_days').first()
+    all_top5 = Article.objects.all().exclude(title=[last.title, top3.title, top7.title], status=0).order_by('-created_date')[:5]
+
     return render(request, 'article/section.html', {'obj': obj, 'section_name': section_name,
-                                                    'subsection_list': subsection_list, 'section_list': section_list})
+                                                    'subsection_list': subsection_list, 'section_list': section_list,
+                                                    'top7': top7, 'top3': top3, 'last': last, 'all_top5': all_top5})
 
 
 def subsection(request, section_name, subsection_name):
@@ -43,7 +47,6 @@ def article(request, section_name, subsection_name, article_title):
             # читателей данной статьи и обновим статистику продвинув её вперед.
             if UserList.objects.filter(article__title=article_title).get(user_id=user_id) and stat.date != date.today():
                 UserList.objects.filter(article=obj).exclude(user_id=user_id).delete()
-                # UserList.objects.create(user_id=user_id, article=obj)
                 stat.date = date.today()
                 stat.three_days = stat.first + stat.second + stat.third
                 stat.seven_days = stat.three_days + stat.fourth + stat.fifth + stat.sixth + stat.seventh

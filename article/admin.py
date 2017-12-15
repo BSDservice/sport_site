@@ -14,7 +14,9 @@ admin.site.register(UserList)
 
 @admin.register(Statistic7days)
 class Statistic7daysAdmin(admin.ModelAdmin):
-    readonly_fields = ['date', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'article', 'total']
+    readonly_fields = ('date', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'article', 'total', )
+    list_display = ('article', 'date', 'first', 'total', )
+    list_filter = ('date', )
 
 
 class IngredientAdminInline(admin.StackedInline):
@@ -47,7 +49,8 @@ class GalleryInline(admin.StackedInline):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'img')
+    list_display = ('title', 'section', 'created_date')
+    list_filter = ('section', 'subsection')
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '100'})},
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},

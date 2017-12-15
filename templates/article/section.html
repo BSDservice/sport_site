@@ -1,18 +1,33 @@
 {% extends "base_generic.html" %}
 {% block content %}
     <div class="row">
-        <aside class="col-sm-2" style="background-color: #868e96"><h2>ТОП СТАТЕЙ ПО САЙТУ</h2></aside>
+        <aside class="col-sm-2" style="background-color: #868e96">
+            {% for elem in all_top5 %}
+            <div class="row all-top-5">
+                <img src="{{ elem.img.url }}">
+            </div>
+            {% endfor %}
+        </aside>
 
     <section class="col-sm-7">
         <div style="background-color: red">
-            <h2>САМАЯ ЧИТАЕМАЯ ЗА НЕДЕЛЮ</h2>
+            <a class="row big-ref-article " href="{{ last.get_url }}">
+                <h2>{{ last.title }}</h2>
+                <img src="{{ last.img.url }}" class="img-fluid">
+            </a>
         </div>
         <div class="row" style="align-content: center">
             <div class="col-sm-6" style="background-color: yellow">
-                <h2>САМАЯ ЧИТАЕМАЯ ЗА ТРИ ДНЯ</h2>
+                <a class="row big-ref-article " href="{{ top7.get_url }}">
+                    <h2>{{ top7.title }}</h2>
+                    <img src="{{ top7.img.url }}" class="img-fluid">
+                </a>
             </div>
             <div class="col-sm-6" style="background-color: blue">
-                <h2>САМАЯ ЧИТАЕМАЯ ЗА СЕГОДНЯ</h2>
+                <a class="row big-ref-article " href="{{ top3.get_url }}">
+                    <h2>{{ top3.title }}</h2>
+                    <img src="{{ top3.img.url }}" class="img-fluid">
+                </a>
             </div>
         </div>
     </section>
