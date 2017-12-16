@@ -16,7 +16,7 @@ class Section(models.Model):
 
     class Meta:
         verbose_name = 'Раздел'
-        verbose_name_plural = 'Список разделов'
+        verbose_name_plural = 'Разделы'
         db_table = 'section'
 
 
@@ -57,6 +57,10 @@ class UserList(models.Model):
     def __str__(self):
         return self.user_id
 
+    class Meta:
+        verbose_name = u'Посетитель'
+        verbose_name_plural = u'Посетители'
+
 
 # статистика на семь дней
 class Statistic7days(models.Model):
@@ -75,6 +79,10 @@ class Statistic7days(models.Model):
 
     def __str__(self):
         return self.article.title
+
+    class Meta:
+        verbose_name = u'Статистика'
+        verbose_name_plural = u'Статистика'
 
 
 # РАЗДЕЛ ПИТАНИЯ
@@ -110,7 +118,7 @@ class Article(models.Model):
 
     class Meta:
         verbose_name = u'Статья'
-        verbose_name_plural = u'Список статей'
+        verbose_name_plural = u'Статьи'
 
 
 # таблица ингредиентов для рецепта
@@ -152,8 +160,8 @@ class SupList(models.Model):
 
     class Meta:
         db_table = 'suplist'
-        verbose_name = u'Список добавок'
-        verbose_name_plural = u'Список добавок'
+        verbose_name = u'Добавка'
+        verbose_name_plural = u'Добавки'
 
 
 # галерея к рациону
@@ -173,12 +181,30 @@ class Gallery(models.Model):
 
 
 # РАЗДЕЛ ФИТНЕСА
+class BodyParts(models.Model):
+    name = models.CharField(max_length=100, )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = u'Часть тела'
+        verbose_name_plural = u'Части тела'
+
+
 # модель упражнения
 class Exercise(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название упражнения', unique=True)
-    equipment = models.CharField(max_length=100, verbose_name='Спортинвентарь', unique=True)
-    body_parts = models.CharField(max_length=100, verbose_name='Прокачиваемая часть тела', unique=True)
+    equipment = models.BooleanField(default=False, verbose_name='Необходимость в снаряжении')
+    body_parts = models.ManyToManyField(BodyParts, verbose_name='На прокачку')
     img = models.ImageField(null=True, blank=True, verbose_name='Изображение')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = u'Упражнение'
+        verbose_name_plural = u'Упражнения'
 
 
 # иллюстрации с описаниями к упражнениям
@@ -193,19 +219,34 @@ class GalleryExercise(models.Model):
     class Meta:
         db_table = 'g_exercise'
         verbose_name = u'Изображение'
-        verbose_name_plural = u'Галерея'
+        verbose_name_plural = u'Галерея упражнений'
 
 
 # упражнение в тренировке
 class TrainingPart(models.Model):
+    order = models.CharField(max_length=10, verbose_name='Номер п/п', blank=True, null=True)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, verbose_name='Упражнение')
-    sets = models.PositiveSmallIntegerField(verbose_name='Колличество сетов')
-    reps = models.PositiveSmallIntegerField(verbose_name='Колличество повторений в каждом сете')
-    rest = models.TimeField(verbose_name='Время отдыха между сетами')
+    sets = models.CharField(max_length=100, verbose_name='Колличество сетов', null=True, blank=True)
+    reps = models.CharField(max_length=100, verbose_name='Колличество повторений в каждом сете', null=True, blank=True)
+    rest = models.CharField(max_length=100, verbose_name='Время отдыха между сетами', null=True, blank=True)
     comment = models.CharField(max_length=200, verbose_name='Комментарий')
     training = models.ForeignKey('Training', verbose_name='Тренировка', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '{0}, сетов: {1}, повторений: {2}, отдых {3}'.format(self.exercise, self.sets, self.reps, self.rest)
+
+    class Meta:
+        verbose_name = u'Упражнение'
+        verbose_name_plural = u'Упражнения для тренировки'
 
 
 class Training(models.Model):
     article = models.ForeignKey(Article,verbose_name='Статья', on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=100, verbose_name='Название тренировки', unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = u'Тренировка'
+        verbose_name_plural = u'Тренировки'

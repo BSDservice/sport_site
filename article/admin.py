@@ -10,6 +10,9 @@ admin.site.register(Section)
 admin.site.register(Gallery)
 admin.site.register(Subsection)
 admin.site.register(UserList)
+admin.site.register(GalleryExercise)
+admin.site.register(TrainingPart)
+admin.site.register(BodyParts)
 
 
 @admin.register(Statistic7days)
@@ -47,6 +50,24 @@ class GalleryInline(admin.StackedInline):
     }
 
 
+class GalleryExerciseInline(admin.StackedInline):
+    model = GalleryExercise
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},
+    }
+
+
+class TrainingPartInline(admin.TabularInline):
+    model = TrainingPart
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': '15'})},
+    }
+
+
+class TrainingInline(admin.StackedInline):
+    model = Training
+
+
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'section', 'created_date')
@@ -56,7 +77,24 @@ class ArticleAdmin(admin.ModelAdmin):
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},
     }
     search_fields = ('title', 'intro')
-    inlines = [IngredientAdminInline, CookingProcessAdminInline, GalleryInline]
+    inlines = [IngredientAdminInline, CookingProcessAdminInline, GalleryInline, TrainingInline]
+
+
+@admin.register(Exercise)
+class ExerciseAdmin(admin.ModelAdmin):
+    list_display = ('name', 'equipment')
+    list_filter = ('equipment', 'body_parts')
+    search_fields = ('name',)
+    inlines = [GalleryExerciseInline]
+
+
+@admin.register(Training)
+class TrainingAdmin(admin.ModelAdmin):
+    list_display = ('name', 'article',)
+    search_fields = ('name', 'article',)
+    inlines = [TrainingPartInline]
+
+
 
 
 '''

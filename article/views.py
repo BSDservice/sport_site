@@ -19,11 +19,11 @@ def section(request, section_name):
     obj = obj.exclude(title=last)
     top7 = obj.order_by('-statistic7days__seven_days').first()
     top3 = obj.exclude(title=top7).order_by('-statistic7days__three_days').first()
-    all_top5 = Article.objects.all().exclude(title=[last.title, top3.title, top7.title], status=0).order_by('-created_date')[:5]
+    all_latest = Article.objects.all().exclude(title=last, status=0).order_by('-created_date')[:5]
 
     return render(request, 'article/section.html', {'obj': obj, 'section_name': section_name,
                                                     'subsection_list': subsection_list, 'section_list': section_list,
-                                                    'top7': top7, 'top3': top3, 'last': last, 'all_top5': all_top5})
+                                                    'top7': top7, 'top3': top3, 'last': last, 'all_latest': all_latest})
 
 
 def subsection(request, section_name, subsection_name):
