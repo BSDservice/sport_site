@@ -71,7 +71,7 @@ class TrainingInline(admin.StackedInline):
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'section', 'created_date')
-    list_filter = ('section', 'subsection')
+    list_filter = ('section', 'subsection', 'status')
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '100'})},
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},

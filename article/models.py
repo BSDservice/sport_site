@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 # разделы(питание, фитнес, секс)
@@ -95,6 +97,15 @@ class Article(models.Model):
     title = models.CharField(max_length=200, verbose_name='Заголовок', unique=True)
     subtitle = models.CharField(max_length=200, verbose_name='Подзаголовок')
     img = models.ImageField(null=True, blank=True, verbose_name='Изображение')
+    img_big = ImageSpecField(source='img',
+                                      processors=[ResizeToFill(640, 480)],
+                                      format='JPEG',
+                                      options={'quality': 100})
+    img_small = ImageSpecField(source='img',
+                             processors=[ResizeToFill(385, 256)],
+                             format='JPEG',
+                             options={'quality': 60})
+
     text = models.TextField(verbose_name='Текст статьи')
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)

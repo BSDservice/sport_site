@@ -8,18 +8,25 @@ from django.db.models import Max
 
 def index(request):
     section_list = Section.objects.all()
-    return render(request, 'article/index.html', {'section_list': section_list})
+    nutrition3 = Article.objects.filter(section__name='Питание', status=1).order_by('-created_date')[1:4]
+    fitness3 = Article.objects.filter(section__name='Фитнес', status=1).order_by('-created_date')[1:4]
+    sex3 = Article.objects.filter(section__name='Секс', status=1).order_by('-created_date')[1:4]
+    sections = (nutrition3, fitness3, sex3)
+    last3 = Article.objects.filter(status=1).order_by('-created_date')[:3]
+    top5 = Article.objects.filter(statistic7days__date=date.today(), status=1).order_by('-statistic7days__first')[:5]
+    return render(request, 'article/index.html', {'section_list': section_list, 'last3': last3, 'top5': top5,
+                                                  'sections': sections})
 
 
 def section(request, section_name):
     section_list = Section.objects.all()
     subsection_list = Subsection.objects.filter(section__name=section_name)
-    obj = Article.objects.filter(section__name=section_name).order_by('-created_date')
+    obj = Article.objects.filter(section__name=section_name, status=1).order_by('-created_date')
     last = obj.first()
     obj = obj.exclude(title=last)
     top7 = obj.order_by('-statistic7days__seven_days').first()
     top3 = obj.exclude(title=top7).order_by('-statistic7days__three_days').first()
-    all_latest = Article.objects.all().exclude(title=last, status=0).order_by('-created_date')[:5]
+    all_latest = Article.objects.filter(status=1).exclude(title=last, status=0).order_by('-created_date')[:5]
 
     return render(request, 'article/section.html', {'obj': obj, 'section_name': section_name,
                                                     'subsection_list': subsection_list, 'section_list': section_list,
@@ -28,7 +35,7 @@ def section(request, section_name):
 
 def subsection(request, section_name, subsection_name):
     section_list = Section.objects.all()
-    obj = Article.objects.filter(section__name=section_name, subsection__name=subsection_name)
+    obj = Article.objects.filter(section__name=section_name, subsection__name=subsection_name, status=1)
     return render(request, 'article/subsection.html', {'subsection_name': subsection_name, 'obj': obj, 'section_list': section_list})
 
 

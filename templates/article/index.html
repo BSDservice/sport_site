@@ -1,22 +1,64 @@
 {% extends "base_generic.html" %}
 {% block content %}
-    <div class="row">
-        <aside class="col-sm-2" style="background-color: #868e96"><h2>ТОП СТАТЕЙ ПО САЙТУ</h2></aside>
+    <div class="row" style="padding: 0 5px">
+        <aside class="col-lg-3 left-media-block">
+            <strong>Читают сегодня</strong>
+            {% for elem in top5 %}
+                <a class="row all-top-5" href="{% url 'article' section_name=elem.section subsection_name=elem.subsection article_title=elem.title %}">
+                    <strong>{{ elem.title }}</strong>
+                </a>
+                <hr>
+            {% endfor %}
+        </aside>
 
-    <section class="col-sm-7">
-        <div style="background-color: red">
-            <h2>САМАЯ ЧИТАЕМАЯ ЗА НЕДЕЛЮ</h2>
-        </div>
-        <div class="row" style="align-content: center">
-            <div class="col-sm-6" style="background-color: yellow">
-                <h2>САМАЯ ЧИТАЕМАЯ ЗА ТРИ ДНЯ</h2>
+        <section class="col-lg-6 center-media-block">
+            <div>
+                {% if last3.0 %}
+                <a class="row big-ref-article " href="{% url 'article' section_name=last3.0.section subsection_name=last3.0.subsection article_title=last3.0.title %}">
+                    <strong class="position-absolute">{{ last3.0.title }}</strong>
+                    <img src="{{ last3.0.img_big.url }}" class="img-fluid top-img">
+                </a>
+                {% endif %}
             </div>
-            <div class="col-sm-6" style="background-color: blue">
-                <h2>САМАЯ ЧИТАЕМАЯ ЗА СЕГОДНЯ</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    {% if last3.1 %}
+                    <a class="row small-ref-article " href="{% url 'article' section_name=last3.1.section subsection_name=last3.1.subsection article_title=last3.1.title %}">
+                        <img src="{{ last3.1.img_small.url }}" class="img-fluid">
+                        <strong>{{ last3.1.title }}</strong>
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="col-sm-6">
+                    {% if last3.2 %}
+                    <a class="row small-ref-article " href="{% url 'article' section_name=last3.2.section subsection_name=last3.2.subsection article_title=last3.2.title %}">
+                        <img src="{{ last3.2.img_small.url }}" class="img-fluid">
+                        <strong>{{ last3.2.title }}</strong>
+                    </a>
+                    {% endif %}
+                </div>
             </div>
+        </section>
+
+        <aside class="col-lg-3 right-media-block">
+            <strong>РЕКЛАМНЫЙ БЛОК</strong>
+        </aside>
+    </div>
+    {% if sections %}
+    {% for elem in sections %}
+    <section style="padding: 5px;">
+    <a class="index-section-title-a" href="{% url 'section' elem.0.section %}"><header class="index-section-title border border-right-0 border-top-0 border-left-0"><strong>{{ elem.0.section }}</strong></header></a>
+        <div class="row">
+            {% for article in elem %}
+            <div class="col-md-4 index-section-item">
+                <a class="row small-ref-article " href=" {% url 'article' section_name=article.section subsection_name=article.subsection article_title=article.title %}">
+                    <img src="{{ article.img_small.url }}" class="img-fluid">
+                    <strong>{{ article.title }}</strong>
+                </a>
+            </div>
+            {% endfor %}
         </div>
     </section>
-
-    <aside class="col-sm-3" style="background-color: #868e96"><h2>РЕКЛАМНЫЙ БЛОК</h2></aside>
-    </div>
+    {% endfor %}
+    {% endif %}
 {% endblock %}

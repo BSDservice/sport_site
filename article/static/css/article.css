@@ -1,16 +1,234 @@
+body{
+    font-family: 'Anonymous Pro', monospace;
+}
+
 h1.logo-site{
     font-family: 'Oswald', sans-serif;
-    font-size: 48px;
+    font-size: 4rem;
     text-shadow: 2px 2px 3px white;
 }
-.big-ref-article{
+
+.nav-link{
+    font-size: 1.375rem;
+}
+
+.btn{
+    border-color: #343a40;
+    border-radius:50px;
+}
+
+.btn>svg{
+        fill: #28a745;;
+        stroke: #28a745;
+        stroke-width: 2;
+        transition: all 0.1s ease;
+    }
+
+.btn:hover>svg{
+        fill: blue !important;
+        stroke: blue;
+        stroke-width: 2;
+        transform: rotate(20deg);
+    }
+
+.btn:hover{
+    background-color:inherit;
+    border-color: #343a40;
+}
+
+#navbarNav{
+    flex-direction: row;
+}
+
+.navbar-nav{
+    flex-grow: 2;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.big-ref-article, .small-ref-article{
+    position: relative;
     color:inherit;
     padding: 10px 20px;
+    transition-duration: 0.1s;
+    margin-bottom: 10px;
 }
-.big-ref-article:hover{
+
+.big-ref-article:hover, .small-ref-article:hover{
     text-decoration: none;
     color: inherit;
 }
+
 .all-top-5{
+    margin: 2%;
     padding: 3% 3% 3% 15%;
+    font-size: 1rem;
+    transition-duration: 0.1s;
+}
+
+.all-top-5:hover{
+    box-shadow: 0 7px 10px rgba(0,0,0,0.25), 0 3px 5px rgba(0,0,0,0.22);
+}
+
+.all-top-5:hover+hr{
+    opacity: 0;
+    transition-duration: inherit;
+}
+
+.top-img{
+    margin: 0px auto;
+}
+
+.big-ref-article strong{
+    text-transform: uppercase;
+    font-size: 2.625rem;
+    line-height: 55px;
+    width: 80%;
+    position: absolute;
+    bottom: 3%;
+    right: 2%;
+    background-color:red;
+    color:#ffffff;
+    font-weight: 900;
+    padding: 1%;
+}
+
+.center-media-block{
+}
+
+.index-section-title{
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem;
+    margin-top:3em;
+    position: relative;
+}
+
+.index-section-title-a:hover{
+    text-decoration: none;
+}
+
+.index-section-title::before{
+    position: absolute;
+    display: block;
+    height: 20px;
+    width: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.index-section-item, .small-ref-article, .nav-link{
+    font-size: 1.375rem;
+}
+
+.left-media-block a{
+    text-decoration: none;
+    color:inherit;
+}
+
+.left-media-block a:hover{
+    color: #008F91;
+}
+
+.left-media-block>strong{
+    font-size: 1.5rem;
+    font-style: italic;
+    display: block;
+    text-align: center;
+    background-color: #343a40;
+    color: white;
+}
+
+.section-item>h2::first-letter, .small-ref-article>strong::first-letter, .all-top-5>strong::first-letter{
+    text-transform: uppercase;
+}
+
+
+@media (min-width: 0px){
+    h1.logo-site{
+        font-size: 1.75rem;
+    }
+
+    .index-section-item, .small-ref-article, .nav-link{
+        font-size: 1rem;
+    }
+
+    .small-ref-article strong{
+        position:absolute;
+        bottom: 3%;
+        left: 10%;
+        background-color:#ffc107;
+    }
+
+    .big-ref-article strong{
+        font-size: 1rem;
+        line-height: 25px;
+    }
+
+    .index-section-title{
+        font-size: 1.25rem;
+        background-color: #343a40;
+        color: #d1ecf1;
+    }
+
+    .all-top-5{
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 768px){
+    h1.logo-site{
+        font-size: 3rem;
+    }
+
+    .index-section-item, .small-ref-article, .nav-link{
+        font-size: 1.40rem;
+    }
+
+    .small-ref-article strong{
+        position:relative;
+        bottom: 0%;
+        left: 0%;
+        background-color:#FFFFFF;
+    }
+
+    .big-ref-article strong{
+        font-size: 2.4rem;
+        line-height: 50px;
+        opacity: 0.8;
+    }
+
+    .big-ref-article:hover strong{
+        opacity: 0.9;
+    }
+
+    .index-section-title{
+        font-size: 2.4rem;
+        background-color: #343a40;
+        color: #d1ecf1;
+    }
+
+    .all-top-5{
+        font-size: 1.1rem;
+    }
+
+    .section-item>p{
+        font-size: 1.1rem;
+    }
+}
+
+@media (min-width: 1281px) {
+    h1.logo-site{
+        font-size: 4rem;
+    }
+    .index-section-item, .small-ref-article, .nav-link{
+        font-size: 1.750rem;
+    }
+    .big-ref-article strong{
+        font-size: 3rem;
+    }
+    .index-section-title{
+        font-size: 3rem;
+    }
+    .all-top-5{
+        font-size: 1.374rem;
+    }
 }

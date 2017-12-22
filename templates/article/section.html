@@ -1,47 +1,57 @@
 {% extends "base_generic.html" %}
 {% block content %}
-    <div class="row">
-        <aside class="col-sm-2" style="background-color: #868e96">
+    <div class="row" style="padding: 0 5px">
+        <aside class="col-lg-3 left-media-block">
+            <strong>Свежак на сайте</strong>
             {% for elem in all_latest %}
-            <div class="row all-top-5">
-                <img src="{{ elem.img.url }}">
-            </div>
+            <a href="{% url 'article' section_name=elem.section subsection_name=elem.subsection article_title=elem.title %}" class="row all-top-5">
+                <strong>{{ elem.title }}</strong>
+            </a>
+                <hr>
             {% endfor %}
         </aside>
 
-    <section class="col-sm-7">
-        <div style="background-color: red">
-            <a class="row big-ref-article " href="{{ last.get_url }}">
-                <h2>{{ last.title }}</h2>
-                <img src="{{ last.img.url }}" class="img-fluid">
-            </a>
-        </div>
-        <div class="row" style="align-content: center">
-            <div class="col-sm-6" style="background-color: yellow">
-                <a class="row big-ref-article " href="{{ top7.get_url }}">
-                    <h2>{{ top7.title }}</h2>
-                    <img src="{{ top7.img.url }}" class="img-fluid">
+        <section class="col-lg-6 center-media-block">
+            <div>
+                {% if last %}
+                <a class="row big-ref-article " href="{% url 'article' section_name=last.section subsection_name=last.subsection article_title=last.title %}">
+                    <strong class="position-absolute">{{ last.title }}</strong>
+                    <img src="{{ last.img_big.url }}" class="img-fluid top-img">
                 </a>
+                {% endif %}
             </div>
-            <div class="col-sm-6" style="background-color: blue">
-                <a class="row big-ref-article " href="{{ top3.get_url }}">
-                    <h2>{{ top3.title }}</h2>
-                    <img src="{{ top3.img.url }}" class="img-fluid">
-                </a>
+            <div class="row">
+                <div class="col-sm-6">
+                    {% if top7 %}
+                    <a class="row small-ref-article " href="{% url 'article' section_name=top7.section subsection_name=top7.subsection article_title=top7.title %}">
+                        <img src="{{ top7.img_small.url }}" class="img-fluid">
+                        <strong>{{ top7.title }}</strong>
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="col-sm-6">
+                    {% if top3 %}
+                    <a class="row small-ref-article " href="{% url 'article' section_name=top3.section subsection_name=top3.subsection article_title=top3.title %}">
+                        <img src="{{ top3.img_small.url }}" class="img-fluid">
+                        <strong>{{ top3.title }}</strong>
+                    </a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <aside class="col-sm-3" style="background-color: #868e96"><h2>РЕКЛАМНЫЙ БЛОК</h2></aside>
+    <aside class="col-lg-3 right-media-block">
+            <strong>РЕКЛАМНЫЙ БЛОК</strong>
+    </aside>
     </div>
     <div class="row">
         <div class="col-md-10">
             {% for elem in obj %}
                 <a class="row big-ref-article " href="{{ elem.get_url }}">
-                    <img class="col-md-6 img-fluid" src="{{ elem.img.url }}">
-                    <div class="col-md-6">
+                    <img class="col-md-5 img-fluid" src="{{ elem.img_small.url }}">
+                    <div class="col-md-7 section-item">
                         <h2>{{ elem.title }}</h2>
-                        <h3>{{ elem.subtitle }}</h3>
+                        <p>{{ elem.subtitle }}</p>
                     </div>
                 </a>
                 <hr>
