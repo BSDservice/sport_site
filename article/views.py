@@ -45,6 +45,8 @@ def article(request, section_name, subsection_name, article_title):
         request.session.save()                             # если нет, сохраням сессию в куки
     user_id = request.session.session_key                  # и достаём его
     obj = get_object_or_404(Article, title=article_title)  # достаем статью
+    obj_list = Article.objects.filter(subsection__name=subsection_name)
+    top3_week = obj_list.order_by('statistic7days__seven_days')[:3]
     stat = Statistic7days.objects.get_or_create(article=obj)
     stat = Statistic7days.objects.get(article=obj)         # получаем статистику по данной статье
     if user_id:                                            # проверяем наличие ID сессии если нет
@@ -87,4 +89,4 @@ def article(request, section_name, subsection_name, article_title):
                 stat.total += 1
                 stat.save()
 
-    return render(request, 'article/article.html', {'obj': obj})
+    return render(request, 'article/article.html', {'obj': obj, 'obj_list': obj_list, 'top3_week': top3_week})
