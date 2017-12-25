@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.urls import reverse
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from ckeditor.fields import RichTextField
 
 
 # разделы(питание, фитнес, секс)
@@ -106,7 +107,7 @@ class Article(models.Model):
                              format='JPEG',
                              options={'quality': 60})
 
-    text = models.TextField(verbose_name='Текст статьи')
+    text = RichTextField(verbose_name='Текст статьи')
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     PUBLIC_STATUS = (

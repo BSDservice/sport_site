@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('article.urls')),
     url(r'^admin_tools/', include('admin_tools.urls')),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 if settings.DEBUG:
     import debug_toolbar

@@ -7,6 +7,7 @@ urlpatterns = [
     path('<str:section_name>/', views.section, name='section'),
     path('<str:section_name>/<str:subsection_name>/', views.subsection, name='subsection'),
     path('<str:section_name>/<str:subsection_name>/<str:article_title>', views.article, name='article'),
+    path('упражнения/<str:exercise>', views.exercise_view, name='exercise'),
 ]
 '''
 urlpatterns += [url(r'^фитнес/$', views.fitness, name='fitness'),

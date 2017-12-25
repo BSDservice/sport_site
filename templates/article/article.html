@@ -5,9 +5,9 @@
         <div class="col-lg-9">
             <header class="article">
                 <h1>{{ obj.title }}</h1>
-                <strong>{{ obj.subtitle }}</strong>
+                <span>{{ obj.subtitle }}</span>
                 <div class="author">{{ obj.author }}</div>
-                <img src="{{ obj.img.url }}">
+                <img src="{{ obj.img.url }}" class="img-fluid">
             </header>
             <div class="row body-article">
                 <aside class="col-lg-3 left-media-block">
@@ -20,13 +20,30 @@
                     {% endfor %}
                 </aside>
                 <div class="col-lg-9 text-article">
-                    {{ obj.text }}
+                    {{ obj.text|safe }}
+                <!--раздел тренировки-->
+                    {% if training_list %}
+                    {% for training in training_list %}
+                        <strong class="training-name">{{ training.name }}</strong>
+                        {% if training_part %}
+                        <ul>
+                        {% for part in training_part %}
+                            {% if part.training.name == training.name %}
+                                <li><span class="order">{{ part.order }}.</span>{{ part.exercise }}<br>сетов:{{ part.sets }},
+                                    повторений:{{ part.reps }}, отдых:{{ part.rest }}
+                                <a href="{% url 'exercise' exercise=part.exercise %}">подробней</a> </li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <!-- конец раздела тренировки-->
                 </div>
             </div>
         </div>
         <aside class="col-lg-3 right-media-block">
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- right side bar -->
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-3308265973976218"

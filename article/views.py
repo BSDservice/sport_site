@@ -39,6 +39,11 @@ def subsection(request, section_name, subsection_name):
     return render(request, 'article/subsection.html', {'subsection_name': subsection_name, 'obj': obj, 'section_list': section_list})
 
 
+def exercise_view(request, exercise):
+    obj = get_object_or_404(Exercise, name=exercise)
+    return render(request, 'article/exercise.html', {'obj': obj})
+
+
 def article(request, section_name, subsection_name, article_title):
     # обновление статистики при запросе статьи
     if not request.session.session_key:                    # проверяем наличие ID сессии в запросе
@@ -88,5 +93,12 @@ def article(request, section_name, subsection_name, article_title):
                 stat.first = 1
                 stat.total += 1
                 stat.save()
+    # выборка для тренировок
+    training_list = False
+    training_part = False
+    if subsection_name == 'Программы тренировок':
+        training_list = Training.objects.filter(article=obj)
+        training_part = TrainingPart.objects.filter(training__article=obj)
 
-    return render(request, 'article/article.html', {'obj': obj, 'obj_list': obj_list, 'top3_week': top3_week})
+    return render(request, 'article/article.html', {'obj': obj, 'obj_list': obj_list, 'top3_week': top3_week,
+                                                    'training_list': training_list, 'training_part': training_part})

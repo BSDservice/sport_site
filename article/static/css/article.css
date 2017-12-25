@@ -140,8 +140,43 @@ h1.logo-site{
 .section-item>h2::first-letter, .small-ref-article>strong::first-letter, .all-top-5>strong::first-letter{
     text-transform: uppercase;
 }
-
-
+/*статья*/
+.text-article{
+    padding: 1rem;
+}
+/*статья-конец*/
+/*тренировка*/
+.training-name{
+    display: block;
+    font-size: 1.4rem;
+    background-color: #0E2231;
+    color: #FFFFFF;
+    padding: 1%;
+}
+.training-name+ul{
+    padding: 1%;
+    list-style: none;
+}
+.training-name+ul>li{
+    padding: 2% 0;
+}
+.training-name+ul>li>a{
+    float: right;
+}
+.training-name+ul>li .order{
+    display: inline-block;
+    background-color: black;
+    margin-right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid red;
+    text-align: center;
+    vertical-align: center;
+    padding-left: 0.3rem;
+    font-weight: 700;
+    color: red;
+}
+/*тренировка-конец*/
 @media (min-width: 0px){
     h1.logo-site{
         font-size: 1.75rem;
@@ -171,6 +206,36 @@ h1.logo-site{
 
     .all-top-5{
         font-size: 0.9rem;
+    }
+
+    .article>h1{
+        font-size: 1.40rem;
+        font-weight: bold;
+        line-height: 3rem;
+        text-align: center;
+      }
+
+    .article>h1:first-letter{
+        text-transform: uppercase;
+    }
+
+    .article>span{
+        font-size: 1rem;
+        font-weight: normal;
+        color: #999;
+      }
+
+    .text-article{
+        text-align: justify;
+        padding: 2rem;
+    }
+
+    .training-name{
+        text-align: left;
+    }
+
+    .training-name+ul{
+        text-align: left;
     }
 }
 
@@ -213,22 +278,50 @@ h1.logo-site{
     .section-item>p{
         font-size: 1.1rem;
     }
+
+    .article>h1{
+        font-size: 2.3rem;
+        font-weight: bold;
+        line-height: 4rem;
+      }
+
+    .article>span{
+        font-size: 1.40rem;
+        font-weight: normal;
+        line-height: 2rem;
+      }
 }
 
-@media (min-width: 1281px) {
+@media (min-width: 1280px) {
     h1.logo-site{
         font-size: 4rem;
     }
+
     .index-section-item, .small-ref-article, .nav-link{
         font-size: 1.750rem;
     }
+
     .big-ref-article strong{
         font-size: 3rem;
     }
+
     .index-section-title{
         font-size: 3rem;
     }
+
     .all-top-5{
         font-size: 1.374rem;
     }
+
+    .article>h1{
+        font-size: 3rem;
+        font-weight: bold;
+        line-height: 5rem;
+      }
+
+    .article>span{
+        font-size: 1.70rem;
+        font-weight: normal;
+        line-height: 2.3rem;
+      }
 }
