@@ -1,9 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import *
 from datetime import date
-from django.db.models import Max
 
 
 def index(request):
@@ -27,7 +26,7 @@ def section(request, section_name):
     top7 = obj.order_by('-statistic7days__seven_days').first()
     top3 = obj.exclude(title=top7).order_by('-statistic7days__three_days').first()
     all_latest = Article.objects.filter(status=1).exclude(title=last, status=0).order_by('-created_date')[:5]
-
+    paginator = Paginator(obj, 3)
     return render(request, 'article/section.html', {'obj': obj, 'section_name': section_name,
                                                     'subsection_list': subsection_list, 'section_list': section_list,
                                                     'top7': top7, 'top3': top3, 'last': last, 'all_latest': all_latest})
@@ -35,16 +34,25 @@ def section(request, section_name):
 
 def subsection(request, section_name, subsection_name):
     section_list = Section.objects.all()
+    subsection_list = Subsection.objects.filter(section__name=section_name)
     obj = Article.objects.filter(section__name=section_name, subsection__name=subsection_name, status=1)
-    return render(request, 'article/subsection.html', {'subsection_name': subsection_name, 'obj': obj, 'section_list': section_list})
+    return render(request, 'article/subsection.html', {'subsection_name': subsection_name, 'obj': obj,
+                                                       'section_list': section_list, 'subsection_list': subsection_list,
+                                                       'section_name': section_name})
 
 
 def exercise_view(request, exercise):
+    section_list = Section.objects.all()
     obj = get_object_or_404(Exercise, name=exercise)
-    return render(request, 'article/exercise.html', {'obj': obj})
+    obj_gallery = GalleryExercise.objects.filter(exercise__name=exercise)
+    top3_week = Article.objects.order_by('statistic7days__seven_days')[:3]
+    return render(request, 'article/exercise.html', {'obj': obj, 'obj_gallery': obj_gallery, 'top3_week': top3_week,
+                                                     'section_list': section_list})
 
 
 def article(request, section_name, subsection_name, article_title):
+    subsection_list = Subsection.objects.filter(section__name=section_name)
+    section_list = Section.objects.all()
     # обновление статистики при запросе статьи
     if not request.session.session_key:                    # проверяем наличие ID сессии в запросе
         request.session.save()                             # если нет, сохраням сессию в куки
@@ -101,4 +109,6 @@ def article(request, section_name, subsection_name, article_title):
         training_part = TrainingPart.objects.filter(training__article=obj)
 
     return render(request, 'article/article.html', {'obj': obj, 'obj_list': obj_list, 'top3_week': top3_week,
-                                                    'training_list': training_list, 'training_part': training_part})
+                                                    'training_list': training_list, 'training_part': training_part,
+                                                    'section_list': section_list, 'subsection_list': subsection_list,
+                                                    'section_name': section_name})

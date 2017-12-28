@@ -1,1 +1,47 @@
 {% extends 'base_generic.html' %}
+{% block content %}
+    <article class="row" style="padding: 0 5px">
+        <div class="col-lg-9">
+            <header class="article" style="border-bottom: 0.1rem solid rgba(0, 0, 0, 0.25); margin: 1rem">
+                <h1>{{ obj.name }}</h1>
+                <img src="{{ obj.img.url }}" class="img-fluid">
+            </header>
+            <div class="row body-article">
+                <aside class="col-lg-3 left-media-block">
+                    <strong>ТОП</strong>
+                    {% for elem in top3_week %}
+                        <a class="row all-top-5" href="{% url 'article' section_name=elem.section subsection_name=elem.subsection article_title=elem.title %}">
+                            <strong>{{ elem.title }}</strong>
+                        </a>
+                        <hr>
+                    {% endfor %}
+                </aside>
+                <div class="col-lg-9 text-article">
+                    {% if obj_gallery %}
+                        <ul>
+                            {% for elem in obj_gallery %}
+                                <li class="row" style="border-bottom: 0.1rem solid rgba(0, 0, 0, 0.25)">
+                                    <img src="{{ elem.img.url }}" class="img-fluid col-sm-6">
+                                    <p class="col-sm-6">{{ elem.description }}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                {% endif %}
+                <!-- конец раздела тренировки-->
+                </div>
+            </div>
+        </div>
+        <aside class="col-lg-3 right-media-block">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3308265973976218"
+                 data-ad-slot="6905253155"
+                 data-ad-format="auto"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </aside>
+    </article>
+{% endblock %}
