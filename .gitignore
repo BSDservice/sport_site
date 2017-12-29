@@ -6,4 +6,5 @@ db.sqlite3
 /article/migrations
 .DS_Store
 /VENV
+/ENV
 /static
