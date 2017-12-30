@@ -3,7 +3,7 @@ from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import *
 from datetime import date
-
+from django.http import HttpResponse
 
 def index(request):
     section_list = Section.objects.all()
@@ -26,10 +26,15 @@ def section(request, section_name):
     top7 = obj.order_by('-statistic7days__seven_days').first()
     top3 = obj.exclude(title=top7).order_by('-statistic7days__three_days').first()
     all_latest = Article.objects.filter(status=1).exclude(title=last, status=0).order_by('-created_date')[:5]
-    paginator = Paginator(obj, 3)
-    return render(request, 'article/section.html', {'obj': obj, 'section_name': section_name,
+    paginator = Paginator(obj, 1)
+    page = request.GET.get('page')
+    next_objects = paginator.get_page(page)
+    max = paginator.num_pages
+    if page is not None and int(page) > 1:
+        return render(request, 'article/list.html', {'obj': next_objects, 'section_name': section_name})
+    return render(request, 'article/section.html', {'obj': next_objects, 'section_name': section_name,
                                                     'subsection_list': subsection_list, 'section_list': section_list,
-                                                    'top7': top7, 'top3': top3, 'last': last, 'all_latest': all_latest})
+                                                    'top7': top7, 'top3': top3, 'last': last, 'all_latest': all_latest, 'max': max})
 
 
 def subsection(request, section_name, subsection_name):
