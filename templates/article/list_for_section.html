@@ -1,0 +1,28 @@
+
+    <div class="col-md-10">
+        {% for elem in obj %}
+            <a class="row big-ref-article " href="{% url 'article' elem.section elem.subsection elem.title %}">
+                <img class="col-md-5 img-fluid" src="{{ elem.img_small.url }}">
+                <div class="col-md-7 section-item">
+                    <h2>{{ elem.title }}</h2>
+                    <p class="text-muted">{{ elem.subtitle }}</p>
+                </div>
+            </a>
+            <hr>
+        {% endfor %}
+        <aside class="row">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-format="fluid"
+                 data-ad-layout-key="-fg+5u+6f-hg+84"
+                 data-ad-client="ca-pub-3308265973976218"
+                 data-ad-slot="4240532531"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </aside>
+        <hr>
+    </div>
+    <aside class="col-md-2">
+    </aside>

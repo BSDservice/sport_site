@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <div id="list">
+        <article class="row" style="padding: 0 5px">
+            {% include 'article/article.html' %}
+        </article>
+    </div>
+{% endblock %}
+{% block js %}
+        <script>
+        var i = 1;
+        $(window).scroll(function() {
+            if($(window).scrollTop() + $(window).height() === $(document).height() && i <= {{ max }}) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState === 4 && this.status === 200) {
+                        article = document.createElement('article');
+                        list = document.getElementById("list");
+                        list.appendChild(article);
+                        last = document.getElementById("list").lastElementChild;
+                        last.className = "row";
+                        last.innerHTML = this.responseText;
+                    }
+                };
+                xhttp.open("GET", "{% url 'article' section_name=section_name subsection_name=subsection_name article_title='abracadabra' %}?page=" + i, true);
+                i+=1;
+                xhttp.send();
+            }
+
+        });
+        </script>
+{% endblock %}

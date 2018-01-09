@@ -5,6 +5,7 @@ from .models import *
 from datetime import date
 from django.http import HttpResponse
 
+
 def index(request):
     section_list = Section.objects.all()
     nutrition3 = Article.objects.filter(section__name='Питание', status=1).order_by('-created_date')[1:4]
@@ -21,29 +22,40 @@ def section(request, section_name):
     section_list = Section.objects.all()
     subsection_list = Subsection.objects.filter(section__name=section_name)
     obj = Article.objects.filter(section__name=section_name, status=1).order_by('-created_date')
+    obj_or_404 = get_list_or_404(obj)
     last = obj.first()
     obj = obj.exclude(title=last)
     top7 = obj.order_by('-statistic7days__seven_days').first()
     top3 = obj.exclude(title=top7).order_by('-statistic7days__three_days').first()
     all_latest = Article.objects.filter(status=1).exclude(title=last, status=0).order_by('-created_date')[:5]
-    paginator = Paginator(obj, 1)
+    paginator = Paginator(obj_or_404, 3)
     page = request.GET.get('page')
     next_objects = paginator.get_page(page)
     max = paginator.num_pages
     if page is not None and int(page) > 1:
-        return render(request, 'article/list.html', {'obj': next_objects, 'section_name': section_name})
+        print(next_objects)
+        return render(request, 'article/list_for_section.html', {'obj': next_objects, 'section_name': section_name})
     return render(request, 'article/section.html', {'obj': next_objects, 'section_name': section_name,
                                                     'subsection_list': subsection_list, 'section_list': section_list,
-                                                    'top7': top7, 'top3': top3, 'last': last, 'all_latest': all_latest, 'max': max})
+                                                    'top7': top7, 'top3': top3, 'last': last, 'all_latest': all_latest,
+                                                    'max': max})
 
 
 def subsection(request, section_name, subsection_name):
     section_list = Section.objects.all()
     subsection_list = Subsection.objects.filter(section__name=section_name)
-    obj = Article.objects.filter(section__name=section_name, subsection__name=subsection_name, status=1)
-    return render(request, 'article/subsection.html', {'subsection_name': subsection_name, 'obj': obj,
+    obj = Article.objects.filter(section__name=section_name, subsection__name=subsection_name, status=1).order_by('-created_date')
+    obj_or_404 = get_list_or_404(obj)
+    paginator = Paginator(obj_or_404, 3)
+    page = request.GET.get('page')
+    next_objects = paginator.get_page(page)
+    max = paginator.num_pages
+    if page is not None and int(page) > 1:
+        return render(request, 'article/list_for_section.html', {'obj': next_objects, 'section_name': section_name,
+                                                     'subsection_name': subsection_name})
+    return render(request, 'article/subsection.html', {'subsection_name': subsection_name, 'obj': next_objects,
                                                        'section_list': section_list, 'subsection_list': subsection_list,
-                                                       'section_name': section_name})
+                                                       'section_name': section_name, 'max': max})
 
 
 def exercise_view(request, exercise):
@@ -63,7 +75,7 @@ def article(request, section_name, subsection_name, article_title):
         request.session.save()                             # если нет, сохраням сессию в куки
     user_id = request.session.session_key                  # и достаём его
     obj = get_object_or_404(Article, title=article_title)  # достаем статью
-    obj_list = Article.objects.filter(subsection__name=subsection_name)
+    obj_list = Article.objects.filter(subsection__name=subsection_name).exclude(title=article_title).order_by('-created_date')
     top3_week = obj_list.order_by('statistic7days__seven_days')[:3]
     stat = Statistic7days.objects.get_or_create(article=obj)
     stat = Statistic7days.objects.get(article=obj)         # получаем статистику по данной статье
@@ -109,11 +121,32 @@ def article(request, section_name, subsection_name, article_title):
     # выборка для тренировок
     training_list = False
     training_part = False
+    ingredients = False
+    cooking_proc =False
     if subsection_name == 'Программы тренировок':
         training_list = Training.objects.filter(article=obj)
-        training_part = TrainingPart.objects.filter(training__article=obj)
+        training_part = TrainingPart.objects.filter(training__article=obj).order_by('order')
+    if subsection_name == 'Рецепты':
+        ingredients = Ingredient.objects.get(recipe=obj)
+        cooking_proc = CookingProcess.objects.get(recipe=obj)
 
-    return render(request, 'article/article.html', {'obj': obj, 'obj_list': obj_list, 'top3_week': top3_week,
-                                                    'training_list': training_list, 'training_part': training_part,
-                                                    'section_list': section_list, 'subsection_list': subsection_list,
-                                                    'section_name': section_name})
+    page = request.GET.get('page')
+    if page is not None:
+        print(obj_list[page])
+        return render(request, 'article/article.html', {'obj': obj_list[page], 'section_name': section_name, 'section_list': section_list,
+                                                        'subsection_list': subsection_list, 'ingredients': ingredients,
+                                                        'cooking_proc': cooking_proc, 'max': max, 'subsection_name': subsection_name,})
+    return render(request, 'article/article_list.html', {'next_obj': obj_list[0], 'obj': obj, 'obj_list': obj_list, 'top3_week': top3_week,
+                                                         'section_list': section_list, 'subsection_list': subsection_list,
+                                                         'section_name': section_name, 'ingredients': ingredients,
+                                                         'cooking_proc': cooking_proc, 'max': max, 'subsection_name': subsection_name,
+                                                         'article_title': article_title, 'training_list': training_list, 'training_part':training_part})
+
+"""
+def article_next(request, section_name, subsection_name, article_title):
+    obj = Article.objects.filter(section=section_name, subsection=subsection_name).exclude(title=article_title).order_by('-created_date')
+    paginator = Paginator(obj,1)
+    page = request.GET.get('page')
+    next_objects = paginator.get_page(page)
+    return render(request, 'article/article.html', {'obj_next': next_objects})
+"""

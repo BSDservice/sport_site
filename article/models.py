@@ -117,9 +117,6 @@ class Article(models.Model):
     status = models.SmallIntegerField(choices=PUBLIC_STATUS, default=0, verbose_name='Статус')
     time = models.SmallIntegerField(blank=True, null=True, verbose_name='Время')
 
-    def get_url(self):
-        return (self.subsection.name + '/' + self.title).lower()
-
     def publish(self):
         self.published_date = timezone.now()
         self.status = 1
@@ -135,30 +132,30 @@ class Article(models.Model):
 
 # таблица ингредиентов для рецепта
 class Ingredient(models.Model):
-    recipe = models.ForeignKey(Article, on_delete=models.CASCADE)
-    item = models.CharField(max_length=100, verbose_name='ингридиент', null=True, blank=True)
+    recipe = models.OneToOneField(Article, on_delete=models.CASCADE)
+    items = models.TextField(verbose_name='ингридиенты', null=True, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.recipe)
 
     class Meta:
         db_table = 'ingredient'
-        verbose_name = u'Ингридиент'
-        verbose_name_plural = u'Ингридиенты'
+        verbose_name = u'Ингридиенты'
+        verbose_name_plural = u'Списки ингридиентов'
 
 
 # таблица приготовления по шагам к рецепту
 class CookingProcess(models.Model):
-    recipe = models.ForeignKey(Article, on_delete=models.CASCADE)
-    step = models.CharField(max_length=500, verbose_name='шаг', null=True, blank=True)
+    recipe = models.OneToOneField(Article, on_delete=models.CASCADE)
+    describe = models.TextField(verbose_name='Процесс приготовления', null=True, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.recipe_id)
 
     class Meta:
         db_table = 'cookproc'
-        verbose_name = u'Шаг'
-        verbose_name_plural = u'Процесс приготовления'
+        verbose_name = u'Процесс приготовления'
+        verbose_name_plural = u'Список процессов приготовления'
 
 
 # таблица добавок к статье-добавки

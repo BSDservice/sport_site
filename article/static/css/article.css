@@ -46,6 +46,10 @@ h1.logo-site{
     align-items: flex-end;
 }
 
+.navbar-nav a:first-letter{
+    text-transform: uppercase;
+}
+
 .big-ref-article, .small-ref-article{
     position: relative;
     color:inherit;

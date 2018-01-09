@@ -44,10 +44,10 @@
             <strong>РЕКЛАМНЫЙ БЛОК</strong>
         </aside>
     </div>
-    <div id="test" class="row">
-    <div>
-    {% include 'article/list.html' %}
-    </div>
+    <div id="list">
+        <div class="row">
+            {% include 'article/list_for_section.html' %}
+        </div>
     </div>
 {% endblock %}
 {% block js %}
@@ -60,10 +60,11 @@
                 xhttp.onreadystatechange = function() {
                     if (this.readyState === 4 && this.status === 200) {
                         div = document.createElement('div');
-                        test = document.getElementById("test");
+                        test = document.getElementById("list");
                         test.appendChild(div);
-                        last_div = document.getElementById("test").lastElementChild;
-                        last_div.innerHTML = this.responseText
+                        last_div = document.getElementById("list").lastElementChild;
+                        last_div.className = "row";
+                        last_div.innerHTML = this.responseText;
                     }
                 };
                 xhttp.open("GET", "{% url 'section' section_name %}?page=" + i, true);
@@ -72,10 +73,6 @@
             }
 
         });
-        </script>
-    {% else %}
-        <script>
-            window.alert('последняя страница!');
         </script>
     {% endif %}
 {% endblock %}

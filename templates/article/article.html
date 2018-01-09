@@ -1,48 +1,53 @@
-{% extends "base_generic.html" %}
 
-{% block content %}
-    <article class="row" style="padding: 0 5px">
-        <div class="col-lg-9">
-            <header class="article">
-                <h1>{{ obj.title }}</h1>
-                <span>{{ obj.subtitle }}</span>
-                <div class="author">{{ obj.author }}</div>
-                <img src="{{ obj.img.url }}" class="img-fluid">
-            </header>
-            <div class="row body-article">
-                <aside class="col-lg-3 left-media-block">
-                    <strong>ТОП</strong>
-                    {% for elem in top3_week %}
-                        <a class="row all-top-5" href="{% url 'article' section_name=elem.section subsection_name=elem.subsection article_title=elem.title %}">
-                            <strong>{{ elem.title }}</strong>
-                        </a>
-                        <hr>
-                    {% endfor %}
-                </aside>
-                <div class="col-lg-9 text-article">
-                    {{ obj.text|safe }}
+    <div class="col-lg-9">
+        <header class="article">
+            <h1>{{ obj.title }}</h1>
+            <span>{{ obj.subtitle }}</span>
+            <div class="author">{{ obj.author }}</div>
+            <img src="{{ obj.img.url }}" class="img-fluid">
+        </header>
+        <div class="row body-article">
+            <aside class="col-lg-3 left-media-block">
+
+            </aside>
+            <div class="col-lg-9 text-article">
+                {{ obj.text|safe }}
                 <!--раздел тренировки-->
-                    {% if training_list %}
-                    {% for training in training_list %}
-                        <strong class="training-name">{{ training.name }}</strong>
-                        {% if training_part %}
-                        <ul>
-                        {% for part in training_part %}
-                            {% if part.training.name == training.name %}
-                                <li><span class="order">{{ part.order }}.</span>{{ part.exercise }}<br>сетов:{{ part.sets }},
-                                    повторений:{{ part.reps }}, отдых:{{ part.rest }}
-                                <a href="{% url 'exercise' exercise=part.exercise %}">подробней</a> </li>
+                {% if training_list %}
+                        {% for training in training_list %}
+                            <strong class="training-name">{{ training.name }}</strong>
+                            {% if training_part %}
+                            <ul>
+                            {% for part in training_part %}
+                                {% if part.training.name == training.name %}
+                                    <li><span class="order">{{ part.order }}.</span>{{ part.exercise }}<br>сетов:{{ part.sets }},
+                                        повторений:{{ part.reps }}, отдых:{{ part.rest }}
+                                    <a href="{% url 'exercise' exercise=part.exercise %}">подробней</a> </li>
+                                {% endif %}
+                            {% endfor %}
+                            </ul>
                             {% endif %}
                         {% endfor %}
-                        </ul>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+                    {% endif %}
                 <!-- конец раздела тренировки-->
-                </div>
+                <!--раздел рецепта-->
+                {% if ingredients %}
+                        <div id="igredients">
+                            <strong>Ингредиенты</strong>
+                            {{ ingredients.items|safe }}
+                        </div>
+                    {% endif %}
+                {% if cooking_proc %}
+                        <div id="cooking-proc">
+                            <strong>Процесс приготовления</strong>
+                            {{ cooking_proc.describe|safe }}
+                        </div>
+                    {% endif %}
+                <!--конец раздела рецепта-->
             </div>
         </div>
-        <aside class="col-lg-3 right-media-block">
+    </div>
+    <aside class="col-lg-3 right-media-block">
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <ins class="adsbygoogle"
                  style="display:block"
@@ -52,6 +57,4 @@
             <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
-        </aside>
-    </article>
-{% endblock %}
+    </aside>
