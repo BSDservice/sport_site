@@ -23,7 +23,7 @@
                         last.innerHTML = this.responseText;
                     }
                 };
-                xhttp.open("GET", "{% url 'article' section_name=section_name subsection_name=subsection_name article_title='abracadabra' %}?page=" + i, true);
+                xhttp.open("GET", "{% url 'article' section_name=section_name subsection_name=subsection_name article_title=next_obj %}?page=" + i, true);
                 i+=1;
                 xhttp.send();
             }

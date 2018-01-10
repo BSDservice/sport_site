@@ -135,11 +135,11 @@ def article(request, section_name, subsection_name, article_title):
         print(obj_list[page])
         return render(request, 'article/article.html', {'obj': obj_list[page], 'section_name': section_name, 'section_list': section_list,
                                                         'subsection_list': subsection_list, 'ingredients': ingredients,
-                                                        'cooking_proc': cooking_proc, 'max': max, 'subsection_name': subsection_name,})
+                                                        'cooking_proc': cooking_proc, 'subsection_name': subsection_name,})
     return render(request, 'article/article_list.html', {'next_obj': obj_list[0], 'obj': obj, 'obj_list': obj_list, 'top3_week': top3_week,
                                                          'section_list': section_list, 'subsection_list': subsection_list,
                                                          'section_name': section_name, 'ingredients': ingredients,
-                                                         'cooking_proc': cooking_proc, 'max': max, 'subsection_name': subsection_name,
+                                                         'cooking_proc': cooking_proc, 'max': obj_list.__len__(), 'subsection_name': subsection_name,
                                                          'article_title': article_title, 'training_list': training_list, 'training_part':training_part})
 
 """

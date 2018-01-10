@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1506ead3-05c3-4195-8bc4-b82de7491a87" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/article/article_list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/article/list_for_section.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/article/list.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/article/models.py" afterPath="$PROJECT_DIR$/article/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/article/static/css/article.css" afterPath="$PROJECT_DIR$/article/static/css/article.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/article/urls.py" afterPath="$PROJECT_DIR$/article/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/article/views.py" afterPath="$PROJECT_DIR$/article/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/article/article.html" afterPath="$PROJECT_DIR$/templates/article/article.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/article/section.html" afterPath="$PROJECT_DIR$/templates/article/section.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/article/subsection.html" afterPath="$PROJECT_DIR$/templates/article/subsection.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base_generic.html" afterPath="$PROJECT_DIR$/templates/base_generic.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/article/article_list.html" afterPath="$PROJECT_DIR$/templates/article/article_list.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,11 +38,13 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/article/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="142" column="151" lean-forward="true" selection-start-line="142" selection-start-column="151" selection-end-line="142" selection-end-column="151" />
+            <state relative-caret-position="159">
+              <caret line="75" column="45" lean-forward="false" selection-start-line="75" selection-start-column="45" selection-end-line="75" selection-end-column="45" />
               <folding>
                 <element signature="e#0#71#0" expanded="true" />
                 <element signature="e#289#1051#0" expanded="false" />
+                <element signature="e#1094#2398#0" expanded="false" />
+                <element signature="e#2461#3472#0" expanded="false" />
                 <element signature="e#3517#3956#0" expanded="false" />
                 <element signature="e#4995#7527#0" expanded="false" />
               </folding>
@@ -62,8 +55,8 @@
       <file leaf-file-name="article.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/article/article.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37">
-              <caret line="13" column="35" lean-forward="true" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+            <state relative-caret-position="221">
+              <caret line="13" column="35" lean-forward="false" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -72,8 +65,8 @@
       <file leaf-file-name="article_list.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/article/article_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="123" lean-forward="false" selection-start-line="25" selection-start-column="123" selection-end-line="25" selection-end-column="123" />
+            <state relative-caret-position="323">
+              <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -102,7 +95,7 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/article/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
+            <state relative-caret-position="2329">
               <caret line="251" column="0" lean-forward="false" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
               <folding>
                 <element signature="e#3014#4731#0" expanded="false" />
@@ -230,8 +223,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -257,17 +250,6 @@
               <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="sport_site" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sport_site" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sport_site" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sport_site" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="article" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -283,14 +265,14 @@
     <property name="SearchEverywhereHistoryKey" value="navbar-nav&#9;null&#9;null&#10;mt-2&#9;null&#9;null&#10;mt-lg-0&#9;null&#9;null&#10;bg-dark&#9;null&#9;null&#10;btn&#9;null&#9;null&#10;btn-outline-success&#9;null&#9;null&#10;form-ro&#9;null&#9;null&#10;form-row&#9;null&#9;null&#10;form-&#9;null&#9;null&#10;form-inline&#9;null&#9;null&#10;navbarNav&#9;null&#9;null&#10;border&#9;null&#9;null&#10;th&#9;null&#9;null&#10;admin\base&#9;FILE&#9;file://C:/web/test_django/django/Lib/site-packages/admin_tools/theming/templates/admin/base.html&#10;bg-dar&#9;null&#9;null&#10;bg&#9;null&#9;null&#10;btn-outline-su&#9;null&#9;null" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\web\sport_site\templates\article" />
-      <recent name="C:\web\sport_site\article" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\web\sport_site\article\static" />
       <recent name="C:\web\sport_site" />
       <recent name="C:\web\test_django\django\Lib\site-packages" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\web\sport_site\templates\article" />
+      <recent name="C:\web\sport_site\article" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -412,7 +394,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21484992" sideWeight="0.4590044" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2764613" sideWeight="0.4590044" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -668,7 +650,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/article/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
+        <state relative-caret-position="2329">
           <caret line="251" column="0" lean-forward="false" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
           <folding>
             <element signature="e#3014#4731#0" expanded="false" />
@@ -683,29 +665,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/article/article_list.html">
+    <entry file="file://$PROJECT_DIR$/templates/article/article.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="123" lean-forward="false" selection-start-line="25" selection-start-column="123" selection-end-line="25" selection-end-column="123" />
+        <state relative-caret-position="221">
+          <caret line="13" column="35" lean-forward="false" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/article/article.html">
+    <entry file="file://$PROJECT_DIR$/templates/article/article_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="13" column="35" lean-forward="true" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+        <state relative-caret-position="323">
+          <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/article/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="142" column="151" lean-forward="true" selection-start-line="142" selection-start-column="151" selection-end-line="142" selection-end-column="151" />
+        <state relative-caret-position="159">
+          <caret line="75" column="45" lean-forward="false" selection-start-line="75" selection-start-column="45" selection-end-line="75" selection-end-column="45" />
           <folding>
             <element signature="e#0#71#0" expanded="true" />
             <element signature="e#289#1051#0" expanded="false" />
+            <element signature="e#1094#2398#0" expanded="false" />
+            <element signature="e#2461#3472#0" expanded="false" />
             <element signature="e#3517#3956#0" expanded="false" />
             <element signature="e#4995#7527#0" expanded="false" />
           </folding>
