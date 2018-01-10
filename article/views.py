@@ -129,13 +129,13 @@ def article(request, section_name, subsection_name, article_title):
     if subsection_name == 'Рецепты':
         ingredients = Ingredient.objects.get(recipe=obj)
         cooking_proc = CookingProcess.objects.get(recipe=obj)
-
     page = request.GET.get('page')
     if page is not None:
-        print(obj_list[page])
+        page = int(page)
         return render(request, 'article/article.html', {'obj': obj_list[page], 'section_name': section_name, 'section_list': section_list,
                                                         'subsection_list': subsection_list, 'ingredients': ingredients,
-                                                        'cooking_proc': cooking_proc, 'subsection_name': subsection_name,})
+                                                        'cooking_proc': cooking_proc, 'subsection_name': subsection_name,
+                                                        'training_list': training_list, 'training_part': training_part})
     return render(request, 'article/article_list.html', {'next_obj': obj_list[0], 'obj': obj, 'obj_list': obj_list, 'top3_week': top3_week,
                                                          'section_list': section_list, 'subsection_list': subsection_list,
                                                          'section_name': section_name, 'ingredients': ingredients,
