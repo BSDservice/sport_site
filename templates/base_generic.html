@@ -15,6 +15,7 @@
         <link href="https://fonts.googleapis.com/css?family=Anonymous+Pro:400,700&amp;subset=cyrillic" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/article.css' %}">
         <script src="{% static 'js/jquery-3.2.1.js' %}"></script>
+        {% block add_to_head %}{% endblock %}
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -46,6 +47,7 @@
                 </form>
             </div>
         </nav>
+        {% block top_ad %}
         <div style="background-color: #343a40">
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <ins class="adsbygoogle"
@@ -58,6 +60,7 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
         </div>
+        {% endblock %}
 
         {% if section_name %}
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">

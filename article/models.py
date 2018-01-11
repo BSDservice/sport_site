@@ -173,11 +173,15 @@ class SupList(models.Model):
         verbose_name_plural = u'Добавки'
 
 
-# галерея к рациону
+# галерея к питанию
 class Gallery(models.Model):
-    ration = models.ForeignKey(Article,on_delete=models.CASCADE)
+    article = models.ForeignKey(Article,on_delete=models.CASCADE)
     img = models.ImageField(null=True, blank=True, verbose_name='Изображение')
     description = models.TextField(verbose_name='Описание')
+    img_big = ImageSpecField(source='img',
+                             processors=[ResizeToFill(640, 480)],
+                             format='JPEG',
+                             options={'quality': 100})
 
     def __str__(self):
         return str(self.id)

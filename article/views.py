@@ -118,35 +118,66 @@ def article(request, section_name, subsection_name, article_title):
                 stat.first = 1
                 stat.total += 1
                 stat.save()
-    # выборка для тренировок
+    # выборка для тренировок и рецептов
     training_list = False
     training_part = False
     ingredients = False
     cooking_proc =False
-    if subsection_name == 'Программы тренировок':
+    gallery = False
+    page = request.GET.get('page')
+    if subsection_name == 'Программы тренировок' and page is None:
         training_list = Training.objects.filter(article=obj)
         training_part = TrainingPart.objects.filter(training__article=obj).order_by('order')
     if subsection_name == 'Рецепты':
-        ingredients = Ingredient.objects.get(recipe=obj)
-        cooking_proc = CookingProcess.objects.get(recipe=obj)
-    page = request.GET.get('page')
+        try:
+            ingredients = Ingredient.objects.get(recipe=obj)
+        except Ingredient.DoesNotExist:
+            ingredients = False
+        try:
+            cooking_proc = CookingProcess.objects.get(recipe=obj)
+        except CookingProcess.DoesNotExist:
+            cooking_proc = False
+        if Gallery.objects.filter(article=obj):
+            gallery = True
+        else:
+            gallery = False
+
     if page is not None:
         page = int(page)
-        return render(request, 'article/article.html', {'obj': obj_list[page], 'section_name': section_name, 'section_list': section_list,
+        next_article = obj_list[page]
+        if subsection_name == 'Программы тренировок':
+            training_list = Training.objects.filter(article=next_article)
+            training_part = TrainingPart.objects.filter(training__article=next_article).order_by('order')
+        if subsection_name == 'Рецепты':
+            try:
+                ingredients = Ingredient.objects.get(recipe=next_article)
+            except Ingredient.DoesNotExist:
+                ingredients = False
+            try:
+                cooking_proc = CookingProcess.objects.get(recipe=next_article)
+            except CookingProcess.DoesNotExist:
+                cooking_proc = False
+            if Gallery.objects.filter(article=next_article):
+                gallery = True
+            else:
+                gallery = False
+
+        return render(request, 'article/article.html', {'obj': next_article, 'section_name': section_name,
                                                         'subsection_list': subsection_list, 'ingredients': ingredients,
                                                         'cooking_proc': cooking_proc, 'subsection_name': subsection_name,
-                                                        'training_list': training_list, 'training_part': training_part})
-    return render(request, 'article/article_list.html', {'next_obj': obj_list[0], 'obj': obj, 'obj_list': obj_list, 'top3_week': top3_week,
-                                                         'section_list': section_list, 'subsection_list': subsection_list,
-                                                         'section_name': section_name, 'ingredients': ingredients,
-                                                         'cooking_proc': cooking_proc, 'max': obj_list.__len__(), 'subsection_name': subsection_name,
-                                                         'article_title': article_title, 'training_list': training_list, 'training_part':training_part})
+                                                        'training_list': training_list, 'training_part': training_part,
+                                                        'section_list': section_list, 'gallery': gallery,})
 
-"""
-def article_next(request, section_name, subsection_name, article_title):
-    obj = Article.objects.filter(section=section_name, subsection=subsection_name).exclude(title=article_title).order_by('-created_date')
-    paginator = Paginator(obj,1)
-    page = request.GET.get('page')
-    next_objects = paginator.get_page(page)
-    return render(request, 'article/article.html', {'obj_next': next_objects})
-"""
+    return render(request, 'article/article_list.html', {'obj': obj, 'obj_list': obj_list,
+                                                         'top3_week': top3_week, 'section_list': section_list,
+                                                         'subsection_list': subsection_list, 'section_name': section_name,
+                                                         'ingredients': ingredients, 'gallery': gallery, 'max': obj_list.__len__(),
+                                                         'cooking_proc': cooking_proc, 'subsection_name': subsection_name,
+                                                         'article_title': article_title, 'training_list': training_list,
+                                                         'training_part':training_part})
+
+
+def gallery(request, article_title):
+    obj = get_object_or_404(Article, title=article_title)
+    gallery_set = get_list_or_404(Gallery, article=obj)
+    return render(request, 'article/gallery.html', {'article_title': article_title, 'gallery_set':gallery_set})

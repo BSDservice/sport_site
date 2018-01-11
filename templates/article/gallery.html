@@ -1,10 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base_generic.html" %}
+{% load static %}
+{% block add_to_head %}<link rel="stylesheet" href="{% static 'css/gallery.css' %}">{% endblock %}
+{% block top_ad %}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-9">
+             <!-- Slideshow container -->
+            <div class="slideshow-container">
+                {% for elem in gallery_set %}
+                <div class="mySlides  fade">
+                    <img src="{{ elem.img_big.url }}"  class="img-fluid" >
+                    <div class="text"></div>
+                </div>
+                {% endfor %}
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+            <div style="text-align:center">
+                {% for i in gallery_set %}
+                    <span class="dot" onclick="currentSlide({{ forloop.counter }})"></span>
+                {% endfor %}
+            </div>
+        </div>
+        {% for elem in gallery_set %}
+            <div class="col-lg-3 description">{{ elem.description }}</div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
 
-</body>
-</html>
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      var descriptions = document.getElementsByClassName("description");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+          descriptions[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+      descriptions[slideIndex-1].style.display = "block";
+    }
+    </script>
+{% endblock %}
