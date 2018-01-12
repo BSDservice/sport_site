@@ -1,0 +1,24 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+{% block add_to_head %}<link rel="stylesheet" href="{% static 'css/search.css' %}">{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        {% if srch %}
+            <ul class="search-list">
+                {% for elem in srch %}
+                    <li><a href="{% url 'article' elem.section elem.subsection elem.title %}">
+                        <h3>{{ elem.title }}</h3>
+                        <div>{{ elem.text }}</div>
+                    </a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>По запросу ни чего не найдено</p>
+        {% endif %}
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+.search-list {
+    list-style-type: none;
+}
+
+.search-list li {
+    margin: 3rem;
+}
+
+.search-list li>a {
+    text-decoration: none;
+}
+
+.search-list li>a:hover{
+
+}

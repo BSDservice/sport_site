@@ -181,3 +181,10 @@ def gallery(request, article_title):
     obj = get_object_or_404(Article, title=article_title)
     gallery_set = get_list_or_404(Gallery, article=obj)
     return render(request, 'article/gallery.html', {'article_title': article_title, 'gallery_set':gallery_set})
+
+def search(request):
+    temp = request.GET.get('search')
+    srch = Article.objects.filter(text__contains=temp)
+    print(temp)
+    print(srch)
+    return render(request, 'article/search.html', {'srch': srch,})
