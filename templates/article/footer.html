@@ -1,0 +1,13 @@
+<footer class="row footer-index">
+    {% for elem in section_list %}
+        <ul class="col-sm-3">
+            <li><strong><a href="{% url 'section' elem.name %}">{{ elem }}</a></strong></li>
+            {% for sub_elem in subsection_list %}
+                {% if sub_elem.section == elem %}<li><a href="{% url 'subsection' section_name=elem.name subsection_name=sub_elem.name %}">{{ sub_elem.name }}</li>{% endif %}
+            {% endfor %}
+        </ul>
+    {% endfor %}
+        <ul class="col-sm-3">
+            <li><strong><a href="#">О нас</a></strong></li>
+        </ul>
+</footer>

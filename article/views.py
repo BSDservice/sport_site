@@ -8,6 +8,7 @@ from django.http import HttpResponse
 
 def index(request):
     section_list = Section.objects.all()
+    subsection_list = Subsection.objects.all()
     nutrition3 = Article.objects.filter(section__name='Питание', status=1).order_by('-created_date')[1:4]
     fitness3 = Article.objects.filter(section__name='Фитнес', status=1).order_by('-created_date')[1:4]
     sex3 = Article.objects.filter(section__name='Секс', status=1).order_by('-created_date')[1:4]
@@ -15,7 +16,7 @@ def index(request):
     last3 = Article.objects.filter(status=1).order_by('-created_date')[:3]
     top5 = Article.objects.filter(statistic7days__date=date.today(), status=1).order_by('-statistic7days__first')[:5]
     return render(request, 'article/index.html', {'section_list': section_list, 'last3': last3, 'top5': top5,
-                                                  'sections': sections})
+                                                  'sections': sections, 'subsection_list': subsection_list,})
 
 
 def section(request, section_name):

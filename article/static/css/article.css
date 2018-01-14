@@ -2,14 +2,49 @@ body{
     font-family: 'Anonymous Pro', monospace;
 }
 
+.footer-index{
+    background-color: #343a40;
+    margin-top: 5rem;
+    padding: 3rem;
+}
+
+.footer-index ul{
+    list-style-type: none;
+    padding-left: 5rem;
+    border-right: 1px solid grey;
+}
+
+.footer-index ul:last-child{
+    border: none;
+}
+
+.footer-index ul li{
+    font-size: 1.2rem;
+}
+
+.footer-index ul li>strong{
+    font-size: 1.5rem;
+}
+
+.footer-index ul a{
+    color: whitesmoke;
+}
+
+.footer-index ul a:hover{
+    text-decoration: none;
+
+}
+
 h1.logo-site{
     font-family: 'Oswald', sans-serif;
     font-size: 4rem;
     text-shadow: 2px 2px 3px white;
+    margin-bottom: 0;
 }
 
 .nav-link{
-    font-size: 1.375rem;
+    font-size: 1rem;
+    padding-bottom: 0;
 }
 
 .btn{
@@ -18,16 +53,13 @@ h1.logo-site{
 }
 
 .btn>svg{
-        fill: #28a745;;
-        stroke: #28a745;
+        fill: #8F97A0;
+        stroke: #8F97A0;
         stroke-width: 2;
         transition: all 0.1s ease;
     }
 
 .btn:hover>svg{
-        fill: blue !important;
-        stroke: blue;
-        stroke-width: 2;
         transform: rotate(20deg);
     }
 
@@ -38,12 +70,18 @@ h1.logo-site{
 
 #navbarNav{
     flex-direction: row;
+    height: 100%;
+    vertical-align: bottom;
+}
+.navbar{
+    align-items: flex-end;
 }
 
 .navbar-nav{
     flex-grow: 2;
     justify-content: space-around;
     align-items: flex-end;
+    padding-top: 100%;
 }
 
 .navbar-nav a:first-letter{
@@ -144,10 +182,13 @@ h1.logo-site{
 .section-item>h2::first-letter, .small-ref-article>strong::first-letter, .all-top-5>strong::first-letter{
     text-transform: uppercase;
 }
+
 /*статья*/
+
 .text-article{
     padding: 1rem;
 }
+
 .text-article>p:first-child::first-letter{
     display: block;
     float: left;
@@ -156,12 +197,15 @@ h1.logo-site{
     padding: 0.3rem;
     margin-right: 0.3rem;
 }
+
 .text-article>p:first-child::first-line{
     vertical-align: text-bottom;
     line-height: inherit;
 }
 /*статья-конец*/
+
 /*тренировка*/
+
 .training-name{
     display: block;
     font-size: 1.4rem;
@@ -169,16 +213,20 @@ h1.logo-site{
     color: #FFFFFF;
     padding: 1%;
 }
+
 .training-name+ul{
     padding: 1%;
     list-style: none;
 }
+
 .training-name+ul>li{
     padding: 2% 0;
 }
+
 .training-name+ul>li>a{
     float: right;
 }
+
 .training-name+ul>li .order{
     display: inline-block;
     background-color: black;
@@ -314,7 +362,7 @@ h1.logo-site{
     }
 
     .index-section-item, .small-ref-article, .nav-link{
-        font-size: 1.750rem;
+        font-size: 1.5rem;
     }
 
     .big-ref-article strong{
