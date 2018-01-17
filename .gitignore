@@ -5,3 +5,5 @@ db.sqlite3
 /media
 /article/migrations
 .DS_Store
+/static
+/sport_site
