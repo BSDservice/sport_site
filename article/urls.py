@@ -20,5 +20,6 @@ urlpatterns += [url(r'^фитнес/$', views.fitness, name='fitness'),
     url(r'^фитнес/кардио/(?P<pk>w+)$', views.cardio, name='cardio'),
     url(r'^фитнес/выносливость/(?P<pk>w+)$', views.endurance, name='endurance'),
     url(r'^фитнес/масса/(?P<pk>w+)$', views.massa, name='massa'),
+
 ]
 '''

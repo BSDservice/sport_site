@@ -9,10 +9,13 @@ from django.http import HttpResponse
 def index(request):
     section_list = Section.objects.all()
     subsection_list = Subsection.objects.all()
-    nutrition3 = Article.objects.filter(section__name='Питание', status=1).order_by('-created_date')[1:4]
-    fitness3 = Article.objects.filter(section__name='Фитнес', status=1).order_by('-created_date')[1:4]
-    sex3 = Article.objects.filter(section__name='Секс', status=1).order_by('-created_date')[1:4]
-    sections = (nutrition3, fitness3, sex3)
+    sections = []
+    for section in section_list:
+        try:
+            q = Article.objects.filter(section__name=section, status=1).order_by('-created_date')[0:4]
+            if len(q) > 0: sections.append(q)
+        except Article.DoesNotExist:
+            pass
     last3 = Article.objects.filter(status=1).order_by('-created_date')[:3]
     top5 = Article.objects.filter(statistic7days__date=date.today(), status=1).order_by('-statistic7days__first')[:5]
     return render(request, 'article/index.html', {'section_list': section_list, 'last3': last3, 'top5': top5,
@@ -21,7 +24,8 @@ def index(request):
 
 def section(request, section_name):
     section_list = Section.objects.all()
-    subsection_list = Subsection.objects.filter(section__name=section_name)
+    #full_subsection_list = Subsection.objects.all()
+    subsection_list = Subsection.objects.all()  #full_subsection_list.filter(section__name=section_name)
     obj = Article.objects.filter(section__name=section_name, status=1).order_by('-created_date')
     obj_or_404 = get_list_or_404(obj)
     last = obj.first()
@@ -34,7 +38,6 @@ def section(request, section_name):
     next_objects = paginator.get_page(page)
     max = paginator.num_pages
     if page is not None and int(page) > 1:
-        print(next_objects)
         return render(request, 'article/list_for_section.html', {'obj': next_objects, 'section_name': section_name})
     return render(request, 'article/section.html', {'obj': next_objects, 'section_name': section_name,
                                                     'subsection_list': subsection_list, 'section_list': section_list,
@@ -44,7 +47,8 @@ def section(request, section_name):
 
 def subsection(request, section_name, subsection_name):
     section_list = Section.objects.all()
-    subsection_list = Subsection.objects.filter(section__name=section_name)
+    #full_subsection_list = Subsection.objects.all()
+    subsection_list = Subsection.objects.all()  #full_subsection_list.filter(section__name=section_name)
     obj = Article.objects.filter(section__name=section_name, subsection__name=subsection_name, status=1).order_by('-created_date')
     obj_or_404 = get_list_or_404(obj)
     paginator = Paginator(obj_or_404, 3)

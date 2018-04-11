@@ -25,7 +25,7 @@ SECRET_KEY = '^*kei9=016lyr)%hmv5wbm4=#ri4_0ve26ley28!d1c@pw)$86'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bsdservice.pythonanywhere.com']
 
 
 # Application definition
@@ -92,8 +92,13 @@ WSGI_APPLICATION = 'sport_site.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'BSDservice$sport_site',
+        'USER': 'BSDservice',
+        'PASSWORD': 'Fktrcfylh88',
+        'HOST': 'BSDservice.mysql.pythonanywhere-services.com',
+        'OPTIONS':{'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
     }
 }
 
@@ -137,7 +142,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = 'C:/web/sport_site/media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'

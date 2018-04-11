@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ru">
     <head>
-        {% block title %}<title>НАЗВАНИЕ САЙТА</title>{% endblock %}
+        {% block title %}<title>ДелайТелоPRO</title>{% endblock %}
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,7 +19,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="{% url 'index' %}"><h1 class="logo-site">НАЗВАНИЕ САЙТА</h1></a>
+            <a class="navbar-brand" href="{% url 'index' %}"><h1 class="logo-site">ДелайТелоPRO</h1></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -73,20 +73,24 @@
                 <div class="collapse navbar-collapse col-sm-4" id="navbarNav">
                     <ul class="navbar-nav" style="">
                         {% for elem in subsection_list %}
+                            {% if elem.section.name == section_name %}
                             <li class="nav-item col-sm-4">
                                 {% if elem.name == subsection_name %}
                                 <a class="nav-link active" href="{% url 'subsection' elem.section elem.name %}">{{ elem }}</a>
-                                {% else %}
+                                {% else  %}
                                 <a class="nav-link" href="{% url 'subsection' elem.section elem.name %}">{{ elem }}</a>
                                 {% endif %}
                             </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </div>
             </nav>
         {% endif %}
+        <div id='padding-for-content'>
         {% block content %}
         {% endblock %}
+        </div>
         {% block footer %}
         {% endblock %}
         {% block js %}

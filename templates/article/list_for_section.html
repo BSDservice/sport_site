@@ -2,7 +2,7 @@
     <div class="col-md-10">
         {% for elem in obj %}
             <a class="row big-ref-article " href="{% url 'article' elem.section elem.subsection elem.title %}">
-                <img class="col-md-5 img-fluid" src="{{ elem.img_small.url }}">
+                <img class="img-fluid" src="{{ elem.img_small.url }}">
                 <div class="col-md-7 section-item">
                     <h2>{{ elem.title }}</h2>
                     <p class="text-muted">{{ elem.subtitle }}</p>
